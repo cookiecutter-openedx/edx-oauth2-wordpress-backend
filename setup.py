@@ -72,9 +72,6 @@ setup(
         "Issue tracker": "https://github.com/StepwiseMath/wp-oauth-backend/issues",
         "Community": "https://stepwisemath.ai",
     },
-    packages=[
-        'wp_oauth_backend',
-    ],
     packages=find_packages(),
     include_package_data=True,
     package_data={"": ["*.html"]},  # include any templates found in this repo.
