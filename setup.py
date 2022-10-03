@@ -78,7 +78,7 @@ setup(
     zip_safe=False,
     keywords='WP OAuth',
     python_requires=">=3.7",
-    install_requires=load_requirements("requiremenents/stable-psa.txt"),
+    install_requires=load_requirements("requirements/stable-psa.txt"),
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
