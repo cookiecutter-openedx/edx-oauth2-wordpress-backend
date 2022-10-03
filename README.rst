@@ -17,17 +17,19 @@ include this repo in your project's requiremets.txt, or install it from the comm
 
 ..  code-block:: bash
     :caption: Python/Django installation
-    cd path/to/your/project
-    source path/to/venv/bin/activate
-    pip install https://github.com/StepwiseMath/wp-oauth-backend
+
+      cd path/to/your/project
+      source path/to/venv/bin/activate
+      pip install https://github.com/StepwiseMath/wp-oauth-backend
 
 ..  code-block:: yaml
     :caption: lms.envs.tutor.production.py
-    ADDL_INSTALLED_APPS:
-    - "wp_oauth_backend"
-    THIRD_PARTY_AUTH_BACKENDS:
-    - "wp_oauth_backend.oauth.WPOAuth2"
-    ENABLE_REQUIRE_THIRD_PARTY_AUTH: true
+
+      ADDL_INSTALLED_APPS:
+      - "wp_oauth_backend"
+      THIRD_PARTY_AUTH_BACKENDS:
+      - "wp_oauth_backend.oauth.WPOAuth2"
+      ENABLE_REQUIRE_THIRD_PARTY_AUTH: true
 
 add these settings to django.conf:
 
@@ -51,13 +53,13 @@ Cookiecutter openedx_devops build
 ..  code-block:: bash
     :caption: add this package as a build requirement
 
-    - name: Add the wp-oauth-backend
-      uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
-      with:
-        repository: wp-oauth-backend
-        repository-organization: StepwiseMath
-        repository-ref: main
-        repository-token: ${{ secrets.PAT }}
+      - name: Add the wp-oauth-backend
+        uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
+        with:
+          repository: wp-oauth-backend
+          repository-organization: StepwiseMath
+          repository-ref: main
+          repository-token: ${{ secrets.PAT }}
 
 
 Cookiecutter openedx_devops deployment
@@ -66,9 +68,9 @@ Cookiecutter openedx_devops deployment
 ..  code-block:: bash
     :caption: add settings to lms.envs.tutor.production
 
-    tutor config save --set OPENEDX_WPOAUTH_BACKEND_BASE_URL="${{ secrets.WPOAUTH_BACKEND_BASE_URL }}" \
-                      --set OPENEDX_WPOAUTH_BACKEND_CLIENT_ID="${{ secrets.WPOAUTH_BACKEND_CLIENT_ID }}" \
-                      --set OPENEDX_WPOAUTH_BACKEND_CLIENT_SECRET="${{ secrets.WPOAUTH_BACKEND_CLIENT_SECRET }}"
+      tutor config save --set OPENEDX_WPOAUTH_BACKEND_BASE_URL="${{ secrets.WPOAUTH_BACKEND_BASE_URL }}" \
+                        --set OPENEDX_WPOAUTH_BACKEND_CLIENT_ID="${{ secrets.WPOAUTH_BACKEND_CLIENT_ID }}" \
+                        --set OPENEDX_WPOAUTH_BACKEND_CLIENT_SECRET="${{ secrets.WPOAUTH_BACKEND_CLIENT_SECRET }}"
 
 
 Developer Notes
