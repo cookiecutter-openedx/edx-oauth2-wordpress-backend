@@ -26,7 +26,7 @@ include this repo in your project's requiremets.txt, or install it from the comm
   ADDL_INSTALLED_APPS:
   - "wp_oauth_backend"
   THIRD_PARTY_AUTH_BACKENDS:
-  - "wp_oauth_backend.oauth.WPOAuth2"
+  - "wp_oauth_backend.wp_oauth.WPOAuth2"
   ENABLE_REQUIRE_THIRD_PARTY_AUTH: true
 
 add these settings to django.conf:
