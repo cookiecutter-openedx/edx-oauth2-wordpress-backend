@@ -63,6 +63,3 @@ class WPOAuth2(BaseOAuth2):
 
     def get_username(self, strategy, details, backend, user=None, *args, **kwargs):
         return details['username']
-
-    def get_key_and_secret(self):
-        return (self.CLIENT_ID, self.CLIENT_SECRET)
