@@ -12,7 +12,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 def load_readme():
-    with io.open(os.path.join(HERE, "README.md"), "rt", encoding="utf8") as f:
+    with io.open(os.path.join(HERE, "README.rst"), "rt", encoding="utf8") as f:
         return f.read()
 
 def load_about():
