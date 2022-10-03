@@ -50,25 +50,25 @@ add these settings to django.conf:
 Cookiecutter openedx_devops build
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-..  code-block:: bash
+..  code-block:: shell
 
-    - name: Add the wp-oauth-backend
-      uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
-      with:
-        repository: wp-oauth-backend
-        repository-organization: StepwiseMath
-        repository-ref: main
-        repository-token: ${{ secrets.PAT }}
+  - name: Add the wp-oauth-backend
+    uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
+    with:
+      repository: wp-oauth-backend
+      repository-organization: StepwiseMath
+      repository-ref: main
+      repository-token: ${{ secrets.PAT }}
 
 
 Cookiecutter openedx_devops deployment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-..  code-block:: bash
+..  code-block:: shell
 
-    tutor config save --set OPENEDX_WPOAUTH_BACKEND_BASE_URL="${{ secrets.WPOAUTH_BACKEND_BASE_URL }}" \
-                      --set OPENEDX_WPOAUTH_BACKEND_CLIENT_ID="${{ secrets.WPOAUTH_BACKEND_CLIENT_ID }}" \
-                      --set OPENEDX_WPOAUTH_BACKEND_CLIENT_SECRET="${{ secrets.WPOAUTH_BACKEND_CLIENT_SECRET }}"
+  tutor config save --set OPENEDX_WPOAUTH_BACKEND_BASE_URL="${{ secrets.WPOAUTH_BACKEND_BASE_URL }}" \
+                    --set OPENEDX_WPOAUTH_BACKEND_CLIENT_ID="${{ secrets.WPOAUTH_BACKEND_CLIENT_ID }}" \
+                    --set OPENEDX_WPOAUTH_BACKEND_CLIENT_SECRET="${{ secrets.WPOAUTH_BACKEND_CLIENT_SECRET }}"
 
 
 Developer Notes
