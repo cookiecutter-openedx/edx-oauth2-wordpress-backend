@@ -1,14 +1,11 @@
-OAuth2 Backend for stepwisemath.ai
-==================================
+OAuth2 Backend for WP Oauth
+===========================
 
 Overview
 --------
 
-A Python Social Auth backend for WP OAuth, mostly used for Open edX but can be used elsewhere.
+A Python Social Auth backend for [WP OAuth](https://wp-oauth.com/), mostly used for Open edX but can be used elsewhere.
 This package was originally cloned from https://github.com/appsembler/trinity-oauth-backend.
-
-This package is structured so that it can be uploaded to PyPI and installed using pip or easyinstall.
-More detail here: https://python-packaging.readthedocs.io/en/latest/minimal.html
 
 Setup
 -----
@@ -48,11 +45,34 @@ add these settings to django.conf:
     - see: https://stepwisemath.ai/wp-admin/admin.php?page=wo_manage_clients
 
 
-Cookiecutter openedx_devops
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Cookiecutter openedx_devops build
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. include this repository in your Build additional requirements
-2. 
+..  code-block:: bash
+    :caption: add this package as a build requirement
+
+    - name: Add the wp-oauth-backend
+      uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
+      with:
+        repository: wp-oauth-backend
+        repository-organization: StepwiseMath
+        repository-ref: main
+        repository-token: ${{ secrets.PAT }}
+
+
+Cookiecutter openedx_devops deployment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+..  code-block:: bash
+    :caption: add settings to lms.envs.tutor.production
+
+    tutor config save --set OPENEDX_WPOAUTH_BACKEND_BASE_URL="${{ secrets.WPOAUTH_BACKEND_BASE_URL }}" \
+                      --set OPENEDX_WPOAUTH_BACKEND_CLIENT_ID="${{ secrets.WPOAUTH_BACKEND_CLIENT_ID }}" \
+                      --set OPENEDX_WPOAUTH_BACKEND_CLIENT_SECRET="${{ secrets.WPOAUTH_BACKEND_CLIENT_SECRET }}"
+
 
 Developer Notes
 -------------
+
+This package is structured so that it can be uploaded to PyPI and installed using pip or easyinstall.
+More detail here: https://python-packaging.readthedocs.io/en/latest/minimal.html
