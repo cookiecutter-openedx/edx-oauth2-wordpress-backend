@@ -15,21 +15,19 @@ General Python/Django
 
 include this repo in your project's requiremets.txt, or install it from the command line.
 
-..  code-block:: bash
-    :caption: Python/Django installation
+..  code-block:: shell
 
-      cd path/to/your/project
-      source path/to/venv/bin/activate
-      pip install https://github.com/StepwiseMath/wp-oauth-backend
+  cd path/to/your/project
+  source path/to/venv/bin/activate
+  pip install https://github.com/StepwiseMath/wp-oauth-backend
 
 ..  code-block:: yaml
-    :caption: lms.envs.tutor.production.py
 
-      ADDL_INSTALLED_APPS:
-      - "wp_oauth_backend"
-      THIRD_PARTY_AUTH_BACKENDS:
-      - "wp_oauth_backend.oauth.WPOAuth2"
-      ENABLE_REQUIRE_THIRD_PARTY_AUTH: true
+  ADDL_INSTALLED_APPS:
+  - "wp_oauth_backend"
+  THIRD_PARTY_AUTH_BACKENDS:
+  - "wp_oauth_backend.oauth.WPOAuth2"
+  ENABLE_REQUIRE_THIRD_PARTY_AUTH: true
 
 add these settings to django.conf:
 
