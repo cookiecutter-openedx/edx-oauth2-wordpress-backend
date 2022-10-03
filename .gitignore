@@ -1,0 +1,82 @@
+# Compiled python modules.
+*.py[cod]
+*.pyc
+__pycache__
+.pytest_cache/
+
+# C extensions
+*.so
+
+# Python egg metadata, regenerated from source files by setuptools.
+# Packages
+*.egg
+*.egg-info
+
+# Setuptools distribution folder.
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.cache/
+.coverage
+.coverage.*
+.tox
+coverage.xml
+htmlcov/
+
+# Translations
+*.mo
+
+# IDEs and text editors
+*~
+*.swp
+.idea/
+.project
+.pycharm_helpers/
+.pydevproject
+
+# The Silver Searcher
+.agignore
+
+# OS X artifacts
+*.DS_Store
+
+# Logging
+log/
+logs/
+chromedriver.log
+ghostdriver.log
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+docs/_build
+docs/modules.rst
+docs/trinity_oauth_backend.rst
+docs/trinity_oauth_backend.*.rst
+
+# Private requirements
+requirements/private.in
+requirements/private.txt
+
+# tox environment temporary artifacts
+tests/__init__.py
+
+# Development task artifacts
+default.db
+
+.vscode/

@@ -1,0 +1,3 @@
+# Latest Python Social Auth
+social-auth-app-django
+social-auth-core

@@ -1,0 +1,5 @@
+# Packages for testing
+pytest==7.1.1
+httpretty==1.1.4
+pycodestyle==2.8.0
+-e .
