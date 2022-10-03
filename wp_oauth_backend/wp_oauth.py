@@ -11,7 +11,7 @@ logger = getLogger(__name__)
 class WPOAuth2(BaseOAuth2):
 
     """WP OAuth authentication backend"""
-    name = 'stepwisemath-oauth2'
+    name = 'wp-oauth'
     SOCIAL_AUTH_SANITIZE_REDIRECTS = False
     ACCESS_TOKEN_METHOD = 'POST'
     EXTRA_DATA = []

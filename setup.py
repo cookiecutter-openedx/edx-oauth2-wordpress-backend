@@ -59,7 +59,7 @@ ABOUT = load_about()
 VERSION = ABOUT["__version__"]
 
 setup(
-    name='stepwisemath-oauth2-backend',
+    name='wp-oauth-backend',
     version=VERSION,
     description=('An OAuth backend for the WP OAuth Plugin, '
                  'mostly used for Open edX but can be used elsewhere.'),
