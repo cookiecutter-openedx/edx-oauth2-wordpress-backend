@@ -18,7 +18,7 @@ def load_readme():
 def load_about():
     about = {}
     with io.open(
-        os.path.join(HERE, "stepwisemath_oauth_backend", "__about__.py"),
+        os.path.join(HERE, "wp_oauth_backend", "__about__.py"),
         "rt",
         encoding="utf-8",
     ) as f:
@@ -66,18 +66,18 @@ setup(
     long_description=README,
     author='Lawrence McDaniel, lpm0073@gmail.com',
     author_email='lpm0073@gmail.com',
-    url='https://github.com/StepwiseMath/stepwisemath-oauth-backend',
+    url='https://github.com/StepwiseMath/wp-oauth-backend',
     project_urls={
-        "Code": "https://github.com/StepwiseMath/stepwisemath-oauth-backend",
-        "Issue tracker": "https://github.com/StepwiseMath/stepwisemath-oauth-backend/issues",
+        "Code": "https://github.com/StepwiseMath/wp-oauth-backend",
+        "Issue tracker": "https://github.com/StepwiseMath/wp-oauth-backend/issues",
         "Community": "https://stepwisemath.ai",
     },
     packages=[
-        'stepwisemath_oauth_backend',
+        'wp_oauth_backend',
     ],
     packages=find_packages(),
     include_package_data=True,
-    package_data={"": ["*.html"]},  # include any Mako templates found in this repo.
+    package_data={"": ["*.html"]},  # include any templates found in this repo.
     zip_safe=False,
     keywords='WP OAuth',
     python_requires=">=3.7",
