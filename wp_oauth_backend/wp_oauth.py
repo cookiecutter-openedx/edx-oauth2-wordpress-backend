@@ -19,15 +19,7 @@ class WPOAuth2(BaseOAuth2):
 
     @property
     def base_url(self):
-        return settings.WPOAUTH_BACKEND_BASE_URL
-
-    @property
-    def CLIENT_ID(self):
-        return settings.WPOAUTH_BACKEND_CLIENT_ID
-
-    @property
-    def CLIENT_SECRET(self):
-        return settings.WPOAUTH_BACKEND_CLIENT_SECRET
+        return "https://stepwisemath.ai"
 
     @property
     def AUTHORIZATION_URL(self) -> str:
