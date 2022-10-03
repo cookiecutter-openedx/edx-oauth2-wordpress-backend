@@ -1,5 +1,5 @@
-WP OAuth 2 Backend
-=============================
+OAuth2 Backend for stepwisemath.ai
+==================================
 
 Overview
 --------
@@ -22,14 +22,14 @@ include this repo in your project's requiremets.txt, or install it from the comm
     :caption: Python/Django installation
     cd path/to/your/project
     source path/to/venv/bin/activate
-    pip install https://github.com/StepwiseMath/stepwisemathai-oauth-backend
+    pip install https://github.com/StepwiseMath/stepwisemath-oauth-backend
 
 ..  code-block:: yaml
     :caption: lms.envs.tutor.production.py
     ADDL_INSTALLED_APPS:
     - "wp_oauth_backend"
     THIRD_PARTY_AUTH_BACKENDS:
-    - "stepwisemathai_oauth_backend.wp_oauth.WPOAuth2"
+    - "stepwisemath_oauth_backend.wp_oauth.WPOAuth2"
     ENABLE_REQUIRE_THIRD_PARTY_AUTH: true
 
 add these settings to django.conf:
