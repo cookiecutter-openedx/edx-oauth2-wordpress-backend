@@ -140,11 +140,18 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
 
         if type(response)==dict:
             # a def in the third_party_auth pipeline list calls get_user_details() after its already
-            # been called once. i don't know why. but, it passes the origina get_user_details() dict
-            # along with additional token-related keys. if we receive this modified dict then we 
+            # been called once. i don't know why. but, it passes the original get_user_details() dict
+            # enhanced with additional token-related keys. if we receive this modified dict then we 
             # should pass it along to the next defs in the pipeline.
+            #
+            # If most of the original keys (see dict definition below) exist in the response object
+            # then we can assume that this is our case.
             qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
             if all(key in response for key in qc_keys):
+                if VERBOSE_LOGGING:
+                    logger.info('get_user_details() -  detected an enhanced get_user_details() dict in the response: {response}'.format(
+                        response=json.dumps(response, sort_keys=True, indent=4)
+                        ))
                 return response
 
             # otherwise we pobably received the default response from the oauth provider based on 
@@ -182,6 +189,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         super_user = 'administrator' in user_roles
         is_staff = 'administrator' in user_roles
 
+        # build the get_user_details() dict
         self._user_details = {
             'id': int(response.get('ID'), 0),
             'username': response.get('user_login', ''),
@@ -225,7 +233,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             logger.error('user_data() {err}'.format(err=e))
             return None
 
-        if not user_details or type(user_details) != dict or 'username' not in user_details.key():
+        if not user_details or type(user_details) != dict or 'username' not in user_details.keys():
             # we should never find ourselves here.
             return user_details
 
