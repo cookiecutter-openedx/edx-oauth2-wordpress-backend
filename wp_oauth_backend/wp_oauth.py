@@ -8,10 +8,12 @@ logger = getLogger(__name__)
 
 
 class WPOAuth2(BaseOAuth2):
-
     """WP OAuth authentication backend"""
+
     name = 'wp-oauth'
-    SOCIAL_AUTH_SANITIZE_REDIRECTS = False
+
+    # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
+    SOCIAL_AUTH_SANITIZE_REDIRECTS = True       # for redirect domain to exactly match the initiating domain.
     ACCESS_TOKEN_METHOD = 'POST'
     SCOPE_SEPARATOR = ','
     BASE_URL = "https://stepwisemath.ai"
@@ -83,16 +85,17 @@ class WPOAuth2(BaseOAuth2):
 
     def user_data(self, access_token, *args, **kwargs) -> dict:
         """Loads user data from service"""
+
         url = f'{self.USER_QUERY}?' + urlencode({
             'access_token': access_token
         })
 
+        logger.info("user_data() url: {url}".format(url=url))
+
         try:
             response = json.loads(self.urlopen(url))
-            logger.info('user_data() -  response: {response}'.format(
-                response=json.dumps(response, sort_keys=True, indent=4)
-                ))
-            return response
+            user_details = self.get_user_details(response)
+            return user_details
         except ValueError as e:
             logger.error('user_data() did not work: {err}'.format(err=e))
             return None
