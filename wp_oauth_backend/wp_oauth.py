@@ -1,3 +1,14 @@
+"""
+written by:     Lawrence McDaniel
+                https://lawrencemcdaniel.com
+
+date:           oct-2022
+
+usage:          Abstract class implementation of BaseOAuth2 to handle the field 
+                mapping and data converstions between the dict that WP Oauth 
+                returns versus the dict that Open edX actually needs.
+"""
+from abc import abstractmethod
 import json
 from urllib.parse import urlencode
 from urllib.request import urlopen
@@ -6,17 +17,27 @@ from social_core.backends.oauth import BaseOAuth2
 from logging import getLogger
 logger = getLogger(__name__)
 
-
-class WPOAuth2(BaseOAuth2):
-    """WP OAuth authentication backend"""
-
-    name = 'wp-oauth'
+VERBOSE_LOGGING = True
+class WPOpenedxOAuth2AbstractClass(BaseOAuth2):
+    """
+    WP OAuth authentication backend customized for Open edX
+    """
 
     # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
-    SOCIAL_AUTH_SANITIZE_REDIRECTS = True       # for redirect domain to exactly match the initiating domain.
+    SOCIAL_AUTH_SANITIZE_REDIRECTS = True       # requires redirect domain to match the original initiating domain.
     ACCESS_TOKEN_METHOD = 'POST'
-    SCOPE_SEPARATOR = ','
-    BASE_URL = "https://stepwisemath.ai"
+
+    @abstractmethod
+    def name(self):
+        raise NotImplementedError("Subclasses should implement this property.")
+
+    @abstractmethod
+    def BASE_URL(self):
+        raise NotImplementedError("Subclasses should implement this property.")
+
+    @abstractmethod
+    def SCOPE_SEPARATOR(self):
+        raise NotImplementedError("Subclasses should implement this property.")
 
     @property
     def base_url(self) -> str:
@@ -51,6 +72,20 @@ class WPOAuth2(BaseOAuth2):
     def get_user_details(self, response) -> dict:
         """Return user details from the WP account"""
 
+        if type(response)==dict:
+            if ('ID' not in response.keys()) or ('user_email' not in response.keys()):
+                logger.info('get_user_details() -  response object lacks required keys. exiting.')
+                return {}
+
+        if VERBOSE_LOGGING:
+            if not response:
+                logger.info('get_user_details() -  response is missing. exiting.')
+                return {}
+
+            logger.info('get_user_details() -  start. response: {response}'.format(
+                response=json.dumps(response, sort_keys=True, indent=4)
+                ))
+
         # try to parse out the first and last names
         split_name = response.get('display_name', '').split()
         first_name = split_name[0] if len(split_name) > 0 else ''
@@ -59,9 +94,10 @@ class WPOAuth2(BaseOAuth2):
         # check for superuser / staff status
         user_roles = response.get('user_roles', [])        
         super_user = 'administrator' in user_roles
+        is_staff = 'administrator' in user_roles
 
         user_details = {
-            'id': int(response.get('ID')),
+            'id': int(response.get('ID'), 0),
             'username': response.get('user_email', ''),
             'wp_username': response.get('user_login', ''),
             'email': response.get('user_email', ''),
@@ -69,16 +105,17 @@ class WPOAuth2(BaseOAuth2):
             'last_name': last_name,
             'fullname': response.get('display_name', ''),
             'is_superuser': super_user,
-            'is_staff': super_user,
+            'is_staff': is_staff,
             'refresh_token': response.get('refresh_token', ''),
-            'scope': response.get('scope'),
+            'scope': response.get('scope', ''),
             'token_type': response.get('token_type', ''),
             'date_joined': response.get('user_registered', ''),
             'user_status': response.get('user_status', ''),
         }
-        logger.info('get_user_details() -  user_details: {user_details}'.format(
-            user_details=json.dumps(user_details, sort_keys=True, indent=4)
-            ))
+        if VERBOSE_LOGGING:
+            logger.info('get_user_details() -  complete. user_details: {user_details}'.format(
+                user_details=json.dumps(user_details, sort_keys=True, indent=4)
+                ))
         return user_details
 
     def user_data(self, access_token, *args, **kwargs) -> dict:
@@ -88,24 +125,39 @@ class WPOAuth2(BaseOAuth2):
             'access_token': access_token
         })
 
-        logger.info("user_data() url: {url}".format(url=url))
+        if VERBOSE_LOGGING:
+            logger.info("user_data() url: {url}".format(url=url))
 
         try:
             response = json.loads(self.urlopen(url))
-            logger.info('user_data() -  response: {response}'.format(
-                response=json.dumps(response, sort_keys=True, indent=4)
-                ))
             user_details = self.get_user_details(response)
             return user_details
         except ValueError as e:
             logger.error('user_data() did not work: {err}'.format(err=e))
             return None
 
+    # utility function. not part of psa.
     def urlopen(self, url):
         return urlopen(url).read().decode("utf-8")
 
-    # def get_user_id(self, details, response):
-    #     return details['id']
+class StepwiseMathOAuth2 (WPOpenedxOAuth2AbstractClass):
 
-    # def get_username(self, strategy, details, backend, user=None, *args, **kwargs):
-    #     return details['username']
+    # This is the string value that will appear in the LMS Django Admin
+    # Third Party Authentication / Provider Configuration (OAuth)
+    # setup page drop-down box titled, "Backend name:", just above
+    # the "Client ID:" and "Client Secret:" fields.
+    def name(self):
+        return 'wp-oauth'
+
+    # note: no slash at the end of the base url. Python Social Auth
+    # might clean this up for you, but i'm not 100% certain of that.
+    def BASE_URL(self):
+        return "https://stepwisemath.ai"
+
+    # the value of the scope separator is user-defined. Check the 
+    # scopes field value for your oauth client in your wordpress host.
+    # the wp-oauth default value for scopes is 'basic' but can be
+    # changed to a list. example 'basic, email, profile'. This 
+    # list can be delimited with commas, spaces, whatever.
+    def SCOPE_SEPARATOR(self):
+        return ","

@@ -61,8 +61,8 @@ VERSION = ABOUT["__version__"]
 setup(
     name='wp-oauth-backend',
     version=VERSION,
-    description=('An OAuth backend for the WP OAuth Plugin, '
-                 'mostly used for Open edX but can be used elsewhere.'),
+    description=('An OAuth backend for the WP OAuth Wordpress Plugin, '
+                 'that is customized for use in Open edX installations.'),
     long_description=README,
     author='Lawrence McDaniel, lpm0073@gmail.com',
     author_email='lpm0073@gmail.com',
