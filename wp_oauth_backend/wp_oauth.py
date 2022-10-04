@@ -18,7 +18,7 @@ from logging import getLogger
 logger = getLogger(__name__)
 
 VERBOSE_LOGGING = True
-class WPOpenedxOAuth2AbstractClass(BaseOAuth2):
+class StepwiseMathWPOAuth2(BaseOAuth2):
     """
     WP OAuth authentication backend customized for Open edX
     """
@@ -27,30 +27,50 @@ class WPOpenedxOAuth2AbstractClass(BaseOAuth2):
     SOCIAL_AUTH_SANITIZE_REDIRECTS = True       # requires redirect domain to match the original initiating domain.
     ACCESS_TOKEN_METHOD = 'POST'
 
-    @abstractmethod
+    # This is the string value that will appear in the LMS Django Admin
+    # Third Party Authentication / Provider Configuration (OAuth)
+    # setup page drop-down box titled, "Backend name:", just above
+    # the "Client ID:" and "Client Secret:" fields.
     def name(self):
-        raise NotImplementedError("Subclasses should implement this property.")
+        return 'stepwisemath-oauth'
 
-    @abstractmethod
+    # note: no slash at the end of the base url. Python Social Auth
+    # might clean this up for you, but i'm not 100% certain of that.
     def BASE_URL(self):
-        raise NotImplementedError("Subclasses should implement this property.")
+        return "https://stepwisemath.ai"
 
-    @abstractmethod
+    # the value of the scope separator is user-defined. Check the 
+    # scopes field value for your oauth client in your wordpress host.
+    # the wp-oauth default value for scopes is 'basic' but can be
+    # changed to a list. example 'basic, email, profile'. This 
+    # list can be delimited with commas, spaces, whatever.
     def SCOPE_SEPARATOR(self):
-        raise NotImplementedError("Subclasses should implement this property.")
+        return ","
 
     @property
     def base_url(self) -> str:
         return self.BASE_URL
 
+    # override AUTHORIZATION_URL in parent class
+    # see https://wp-oauth.com/docs/general/endpoints/
     @property
     def AUTHORIZATION_URL(self) -> str:
         return f"{self.base_url}/oauth/authorize"
 
+    # overrides ACCESS_TOKEN_URL from parent class
     @property
+    # see https://wp-oauth.com/docs/general/endpoints/
     def ACCESS_TOKEN_URL(self) -> str:
         return f"{self.base_url}/oauth/token"
 
+    # overrides USER_QUERY from parent class
+    # see https://wp-oauth.com/docs/general/endpoints/
+    @property
+    def USER_QUERY(self) -> str:
+        return f"{self.base_url}/oauth/me"
+
+    # overrides EXTRA_DATA from parent class
+    # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     @property
     def EXTRA_DATA(self) -> list:
         return [
@@ -65,10 +85,8 @@ class WPOpenedxOAuth2AbstractClass(BaseOAuth2):
             ('date_joined', 'date_joined'),
         ]
 
-    @property
-    def USER_QUERY(self) -> str:
-        return f"{self.base_url}/oauth/me"
-
+    # implementation of get_user_details()
+    # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     def get_user_details(self, response) -> dict:
         """Return user details from the WP account"""
 
@@ -118,6 +136,11 @@ class WPOpenedxOAuth2AbstractClass(BaseOAuth2):
                 ))
         return user_details
 
+    # implementation of user_data()
+    # note that in the case of wp oauth, the response object returned by self.USER_QUERY
+    # is the same as the response object passed to get_user_details().
+    #
+    # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     def user_data(self, access_token, *args, **kwargs) -> dict:
         """Loads user data from service"""
 
@@ -139,25 +162,3 @@ class WPOpenedxOAuth2AbstractClass(BaseOAuth2):
     # utility function. not part of psa.
     def urlopen(self, url):
         return urlopen(url).read().decode("utf-8")
-
-class StepwiseMathOAuth2 (WPOpenedxOAuth2AbstractClass):
-
-    # This is the string value that will appear in the LMS Django Admin
-    # Third Party Authentication / Provider Configuration (OAuth)
-    # setup page drop-down box titled, "Backend name:", just above
-    # the "Client ID:" and "Client Secret:" fields.
-    def name(self):
-        return 'wp-oauth'
-
-    # note: no slash at the end of the base url. Python Social Auth
-    # might clean this up for you, but i'm not 100% certain of that.
-    def BASE_URL(self):
-        return "https://stepwisemath.ai"
-
-    # the value of the scope separator is user-defined. Check the 
-    # scopes field value for your oauth client in your wordpress host.
-    # the wp-oauth default value for scopes is 'basic' but can be
-    # changed to a list. example 'basic, email, profile'. This 
-    # list can be delimited with commas, spaces, whatever.
-    def SCOPE_SEPARATOR(self):
-        return ","
