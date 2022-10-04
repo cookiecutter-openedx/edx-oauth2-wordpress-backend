@@ -2,7 +2,6 @@ import json
 from urllib.parse import urlencode
 from urllib.request import urlopen
 from social_core.backends.oauth import BaseOAuth2
-from django.conf import settings
 
 from logging import getLogger
 logger = getLogger(__name__)
@@ -14,12 +13,11 @@ class WPOAuth2(BaseOAuth2):
     name = 'wp-oauth'
     SOCIAL_AUTH_SANITIZE_REDIRECTS = False
     ACCESS_TOKEN_METHOD = 'POST'
-    EXTRA_DATA = []
     SCOPE_SEPARATOR = ','
     BASE_URL = "https://stepwisemath.ai"
 
     @property
-    def base_url(self):
+    def base_url(self) -> str:
         return self.BASE_URL
 
     @property
@@ -31,26 +29,56 @@ class WPOAuth2(BaseOAuth2):
         return f"{self.base_url}/oauth/token"
 
     @property
+    def EXTRA_DATA(self) -> list:
+        return [
+            ('id', 'id'),
+            ('username', 'username'),
+            ('email', 'email'),
+            ('first_name', 'first_name'),
+            ('last_name', 'last_name'),
+            ('fullname', 'fullname'),
+            ('is_superuser', 'is_superuser'),
+            ('is_staff', 'is_staff'),
+            ('date_joined', 'date_joined'),
+        ]
+
+    @property
     def USER_QUERY(self) -> str:
         return f"{self.base_url}/oauth/me"
 
-    def get_user_details(self, response):
+    def get_user_details(self, response) -> dict:
         """Return user details from the WP account"""
+
+        # try to parse out the first and last names
+        split_name = response.get('display_name', '').split()
+        first_name = split_name[0] if len(split_name) > 0 else ''
+        last_name = split_name[-1] if len(split_name) == 2 else ''
+
+        # check for superuser / staff status
+        user_roles = response.get('user_roles', [])        
+        super_user = 'administrator' in user_roles
+
         user_details = {
             'id': int(response.get('ID')),
             'username': response.get('user_login'),
             'email': response.get('user_email'),
-            'first_name': response.get("first_name", ""),
-            'last_name': response.get("last_name", ""),
+            'first_name': first_name,
+            'last_name': last_name,
             'fullname': response.get('display_name'),
+            'is_superuser': super_user,
+            'is_staff': super_user,
+            'refresh_token': response.get('refresh_token'),
+            'scope': response.get('scope'),
+            'token_type': response.get('token_type'),
+            'date_joined': response.get('user_registered'),
+            'user_status': response.get('user_status'),
         }
-        logger.info('get_user_details() -  response: {response} user_details: {user_details}'.format(
-            response=json.dumps(response, sort_keys=True, indent=4),
+        logger.info('get_user_details() -  user_details: {user_details}'.format(
             user_details=json.dumps(user_details, sort_keys=True, indent=4)
             ))
         return user_details
 
-    def user_data(self, access_token, *args, **kwargs):
+    def user_data(self, access_token, *args, **kwargs) -> dict:
         """Loads user data from service"""
         url = f'{self.USER_QUERY}?' + urlencode({
             'access_token': access_token
