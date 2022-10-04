@@ -12,9 +12,12 @@ usage:          subclass of BaseOAuth2 Third Party Authtencation client to
 import json
 from urllib.parse import urlencode
 from urllib.request import urlopen
-from social_core.backends.oauth import BaseOAuth2
-
 from logging import getLogger
+from social_core.backends.oauth import BaseOAuth2
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 logger = getLogger(__name__)
 
 VERBOSE_LOGGING = True
@@ -22,6 +25,17 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     """
     WP OAuth authentication backend customized for Open edX.
     see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
+
+    Notes:
+    - Python Social Auth social_core and/or Open edX's third party authentication core
+      are finicky about how the "properties" are implemented. Anything that actually
+      declared as a Python class variable needs to remain a Python class variable. 
+      DO NOT refactor these into formal Python properties as something upstream will
+      break your code.
+
+    - for some reason adding an __init__() def to this class also causes something
+      upstream to break. If you try this then you'll get an error about a missing 
+      positional argument, 'strategy'.
     """
     _user_details = None
 
@@ -73,7 +87,6 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # (which should be a dict instance) and alias is the name to store it on extra_data.
     EXTRA_DATA = [
             ('id', 'id'),
-            ('wp_username', 'wp_username'),
             ('is_superuser', 'is_superuser'),
             ('is_staff', 'is_staff'),
             ('date_joined', 'date_joined'),
@@ -119,25 +132,45 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     # Return user details from the Wordpress user account
     def get_user_details(self, response) -> dict:
+        tainted = False
+
+        if not response:
+            logger.warning('get_user_details() -  response object is missing.')
+            tainted = True
+
         if type(response)==dict:
-            if ('ID' not in response.keys()) or ('user_email' not in response.keys()):
-                logger.info('get_user_details() -  response missing required keys. trying to return cached results. response: {response} user_details: {user_details}'.format(
-                    response=json.dumps(response, sort_keys=True, indent=4),
-                    user_details=json.dumps(self._user_details, sort_keys=True, indent=4)
-                ))
-                if self._user_details:
-                    return self._user_details
-                logger.error('no cached results found. Cannot get user details from oauth provider.')
-                return None
+            # a def in the third_party_auth pipeline list calls get_user_details() after its already
+            # been called once. i don't know why. but, it passes the origina get_user_details() dict
+            # along with additional token-related keys. if we receive this modified dict then we 
+            # should pass it along to the next defs in the pipeline.
+            qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
+            if all(key in response for key in qc_keys):
+                return response
 
-        if VERBOSE_LOGGING:
-            if not response:
-                logger.info('get_user_details() -  response is missing. exiting.')
-                return None
-
-            logger.info('get_user_details() -  start. response: {response}'.format(
-                response=json.dumps(response, sort_keys=True, indent=4)
+            # otherwise we pobably received the default response from the oauth provider based on 
+            # the scopes 'basic' 'email' 'profile'. We'll check a few of the most important keys to see
+            # if they exist.
+            if ('ID' not in response.keys()) or ('user_email' not in response.keys()) or ('user_login' not in response.keys()):
+                logger.warning('get_user_details() -  response object is missing one or more required keys: {response}'.format(
+                    response=json.dumps(response, sort_keys=True, indent=4)
                 ))
+                tainted = True
+            else:
+                if VERBOSE_LOGGING:
+                    logger.info('get_user_details() -  start. response: {response}'.format(
+                        response=json.dumps(response, sort_keys=True, indent=4)
+                        ))
+
+        if tainted and self._user_details:
+            logger.warning('get_user_details() -  returning cached results. user_details: {user_details}'.format(
+                user_details=json.dumps(self._user_details, sort_keys=True, indent=4)
+            ))
+            return self._user_details
+
+        if tainted:
+            logger.error('response object is missing or misformed, and no cached results were found. Cannot get user details from oauth provider.')
+            return None
+
 
         # try to parse out the first and last names
         split_name = response.get('display_name', '').split()
@@ -151,8 +184,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
 
         self._user_details = {
             'id': int(response.get('ID'), 0),
-            'username': response.get('user_email', ''),
-            'wp_username': response.get('user_login', ''),
+            'username': response.get('user_login', ''),
             'email': response.get('user_email', ''),
             'first_name': first_name,
             'last_name': last_name,
@@ -177,6 +209,8 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     #
     # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     def user_data(self, access_token, *args, **kwargs) -> dict:
+        user_details = None
+
         url = f'{self.USER_QUERY}?' + urlencode({
             'access_token': access_token
         })
@@ -187,7 +221,32 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         try:
             response = json.loads(self._urlopen(url))
             user_details = self.get_user_details(response)
-            return user_details
         except ValueError as e:
             logger.error('user_data() {err}'.format(err=e))
             return None
+
+        if not user_details or type(user_details) != dict or 'username' not in user_details.key():
+            # we should never find ourselves here.
+            return user_details
+
+        # add syncronization of any data fields that get missed by the built-in
+        # open edx third party authentication sync functionality.
+        user=User.objects.get(username=user_details['username'])
+
+        if not user:
+            # this seems exceedingly unlikely, but, you never know.
+            return user_details
+
+        if (user.is_superuser != user_details['is_superuser']) or (user.is_staff != user_details['is_staff']):
+            user.is_superuser = user_details['is_superuser']
+            user.is_staff = user_details['is_staff']
+            user.save()
+            logger.info('Updated the is_superuser/is_staff flags for user {username}'.format(username=user.username))
+
+        if (user.first_name != user_details['first_name']) or (user.last_name != user_details['last_name']):
+            user.first_name = user_details['first_name']
+            user.last_name = user_details['last_name']
+            user.save()
+            logger.info('Updated first_name/last_name for user {username}'.format(username=user.username))
+
+        return user_details
