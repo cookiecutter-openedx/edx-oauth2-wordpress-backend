@@ -60,23 +60,21 @@ class WPOAuth2(BaseOAuth2):
         user_roles = response.get('user_roles', [])        
         super_user = 'administrator' in user_roles
 
-        # create a unique but repeatable username
-        username = response.get('user_login') + '_' + response.get('ID')
-
         user_details = {
             'id': int(response.get('ID')),
-            'username': username,
-            'email': response.get('user_email'),
+            'username': response.get('user_email', ''),
+            'wp_username': response.get('user_login', ''),
+            'email': response.get('user_email', ''),
             'first_name': first_name,
             'last_name': last_name,
-            'fullname': response.get('display_name'),
+            'fullname': response.get('display_name', ''),
             'is_superuser': super_user,
             'is_staff': super_user,
-            'refresh_token': response.get('refresh_token'),
+            'refresh_token': response.get('refresh_token', ''),
             'scope': response.get('scope'),
-            'token_type': response.get('token_type'),
-            'date_joined': response.get('user_registered'),
-            'user_status': response.get('user_status'),
+            'token_type': response.get('token_type', ''),
+            'date_joined': response.get('user_registered', ''),
+            'user_status': response.get('user_status', ''),
         }
         logger.info('get_user_details() -  user_details: {user_details}'.format(
             user_details=json.dumps(user_details, sort_keys=True, indent=4)
@@ -94,6 +92,9 @@ class WPOAuth2(BaseOAuth2):
 
         try:
             response = json.loads(self.urlopen(url))
+            logger.info('user_data() -  response: {response}'.format(
+                response=json.dumps(response, sort_keys=True, indent=4)
+                ))
             user_details = self.get_user_details(response)
             return user_details
         except ValueError as e:
