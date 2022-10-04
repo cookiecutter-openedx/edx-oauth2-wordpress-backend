@@ -45,6 +45,12 @@ add these settings to django.conf:
     - see: https://stepwisemath.ai/wp-admin/admin.php?page=wo_manage_clients
   * - WPOAUTH_BACKEND_CLIENT_SECRET
     - see: https://stepwisemath.ai/wp-admin/admin.php?page=wo_manage_clients
+  * - SCOPE
+    - basic email profile
+  * - GRANT_TYPE
+    - Authorization Code
+  * - REDIRECT_URI
+    - https://web.stepwisemath.ai/auth/complete/stepwisemath-oauth
 
 
 Cookiecutter openedx_devops build
