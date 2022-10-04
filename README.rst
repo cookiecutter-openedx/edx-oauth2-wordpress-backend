@@ -6,8 +6,8 @@ Overview
 
 A Python Social Auth backend for [WP OAuth](https://wp-oauth.com/) this is customized for use with Open edX.
 
-- [Python Social Auth custom backend implentation](https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html)
-- [WP Oauth Wordpress Plugin Documentation](https://wp-oauth.com/docs/)
+- `Python Social Auth custom backend implentation <https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html>`_
+- `WP Oauth Wordpress Plugin Documentation <https://wp-oauth.com/docs/>`_
 
 Open edX Setup
 --------------
