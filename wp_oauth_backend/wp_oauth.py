@@ -23,6 +23,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     WP OAuth authentication backend customized for Open edX.
     see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     """
+    _user_details = None
 
     # This defines the backend name and identifies it during the auth process. 
     # The name is used in the URLs /login/<backend name> and /complete/<backend name>.
@@ -120,13 +121,19 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     def get_user_details(self, response) -> dict:
         if type(response)==dict:
             if ('ID' not in response.keys()) or ('user_email' not in response.keys()):
-                logger.info('get_user_details() -  response object lacks required keys. exiting.')
-                return {}
+                logger.info('get_user_details() -  response missing required keys. trying to return cached results. response: {response} user_details: {user_details}'.format(
+                    response=json.dumps(response, sort_keys=True, indent=4),
+                    user_details=json.dumps(self._user_details, sort_keys=True, indent=4)
+                ))
+                if self._user_details:
+                    return self._user_details
+                logger.error('no cached results found. Cannot get user details from oauth provider.')
+                return None
 
         if VERBOSE_LOGGING:
             if not response:
                 logger.info('get_user_details() -  response is missing. exiting.')
-                return {}
+                return None
 
             logger.info('get_user_details() -  start. response: {response}'.format(
                 response=json.dumps(response, sort_keys=True, indent=4)
@@ -142,7 +149,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         super_user = 'administrator' in user_roles
         is_staff = 'administrator' in user_roles
 
-        user_details = {
+        self._user_details = {
             'id': int(response.get('ID'), 0),
             'username': response.get('user_email', ''),
             'wp_username': response.get('user_login', ''),
@@ -160,9 +167,9 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         }
         if VERBOSE_LOGGING:
             logger.info('get_user_details() -  finish. user_details: {user_details}'.format(
-                user_details=json.dumps(user_details, sort_keys=True, indent=4)
+                user_details=json.dumps(self._user_details, sort_keys=True, indent=4)
                 ))
-        return user_details
+        return self._user_details
 
     # Load user data from service url end point. Note that in the case of 
     # wp oauth, the response object returned by self.USER_QUERY
