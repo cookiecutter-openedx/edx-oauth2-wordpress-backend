@@ -22,6 +22,9 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     """
     WP OAuth authentication backend customized for Open edX
     """
+    # private utility function. not part of psa.
+    def _urlopen(self, url):
+        return urlopen(url).read().decode("utf-8")
 
     # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
 
@@ -162,13 +165,10 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             logger.info("user_data() url: {url}".format(url=url))
 
         try:
-            response = json.loads(self.urlopen(url))
+            response = json.loads(self._urlopen(url))
             user_details = self.get_user_details(response)
             return user_details
         except ValueError as e:
             logger.error('user_data() did not work: {err}'.format(err=e))
             return None
 
-    # utility function. not part of psa.
-    def urlopen(self, url):
-        return urlopen(url).read().decode("utf-8")
