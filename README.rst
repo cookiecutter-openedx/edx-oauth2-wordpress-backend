@@ -7,8 +7,8 @@ Overview
 A Python Social Auth backend for [WP OAuth](https://wp-oauth.com/), mostly used for Open edX but can be used elsewhere.
 This package was originally cloned from https://github.com/appsembler/trinity-oauth-backend.
 
-Setup
------
+Open edX Setup
+--------------
 
 General Python/Django
 ~~~~~~~~~~~~~~~~~~~~~
@@ -67,6 +67,16 @@ Cookiecutter openedx_devops deployment
   tutor config save --set OPENEDX_WPOAUTH_BACKEND_BASE_URL="${{ secrets.WPOAUTH_BACKEND_BASE_URL }}" \
                     --set OPENEDX_WPOAUTH_BACKEND_CLIENT_ID="${{ secrets.WPOAUTH_BACKEND_CLIENT_ID }}" \
                     --set OPENEDX_WPOAUTH_BACKEND_CLIENT_SECRET="${{ secrets.WPOAUTH_BACKEND_CLIENT_SECRET }}"
+
+WP Oauth Plugin Configuration
+-----------------------------
+
+This plugin enable your Open edX installation to authenticate against the WP Oauth plugin provider
+in https://stepwisemath.ai/, configured as follows:
+
+.. image:: doc/wp-oauth-config.png
+  :width: 100%
+  :alt: WP Oauth configuration page
 
 
 Developer Notes
