@@ -24,18 +24,27 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     """
 
     # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
-    SOCIAL_AUTH_SANITIZE_REDIRECTS = True       # requires redirect domain to match the original initiating domain.
-    ACCESS_TOKEN_METHOD = 'POST'
+
+    @property
+    def ACCESS_TOKEN_METHOD(self):
+        return 'POST'
+
+    # require redirect domain to match the original initiating domain.
+    @property
+    def SOCIAL_AUTH_SANITIZE_REDIRECTS(self):
+        return True
 
     # This is the string value that will appear in the LMS Django Admin
     # Third Party Authentication / Provider Configuration (OAuth)
     # setup page drop-down box titled, "Backend name:", just above
     # the "Client ID:" and "Client Secret:" fields.
+    @property
     def name(self):
         return 'stepwisemath-oauth'
 
     # note: no slash at the end of the base url. Python Social Auth
     # might clean this up for you, but i'm not 100% certain of that.
+    @property
     def BASE_URL(self):
         return "https://stepwisemath.ai"
 
@@ -44,6 +53,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # the wp-oauth default value for scopes is 'basic' but can be
     # changed to a list. example 'basic, email, profile'. This 
     # list can be delimited with commas, spaces, whatever.
+    @property
     def SCOPE_SEPARATOR(self):
         return ","
 
