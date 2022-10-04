@@ -50,7 +50,11 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # Some providers give nothing about the user but some basic data like the 
     # user Id or an email address. The default scope attribute is used to 
     # specify a default value for the scope argument to request those extra bits.
-    DEFAULT_SCOPE = 'basic'
+    #
+    # wp-oauth supports 4 scopes: basic, email, profile, openeid. 
+    # we want the first three of these.
+    # see https://wp-oauth.com/docs/how-to/adding-supported-scopes/
+    DEFAULT_SCOPE = ['basic', 'profile', 'email']
 
     # Specifying the method type required to retrieve your access token if it’s 
     # not the default GET request.
