@@ -24,12 +24,6 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     """
 
-    def __init__(self, strategy, redirect_uri=None):
-        super().__init__(strategy, redirect_uri)
-
-        if VERBOSE_LOGGING:
-            logger.info('StepwiseMathWPOAuth2() -  ready.')
-
     # This defines the backend name and identifies it during the auth process. 
     # The name is used in the URLs /login/<backend name> and /complete/<backend name>.
     #
@@ -74,6 +68,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # (which should be a dict instance) and alias is the name to store it on extra_data.
     EXTRA_DATA = [
             ('id', 'id'),
+            ('wp_username', 'wp_username'),
             ('is_superuser', 'is_superuser'),
             ('is_staff', 'is_staff'),
             ('date_joined', 'date_joined'),
