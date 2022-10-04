@@ -16,10 +16,11 @@ class WPOAuth2(BaseOAuth2):
     ACCESS_TOKEN_METHOD = 'POST'
     EXTRA_DATA = []
     SCOPE_SEPARATOR = ','
+    BASE_URL = "https://stepwisemath.ai"
 
     @property
     def base_url(self):
-        return "https://stepwisemath.ai"
+        return self.BASE_URL
 
     @property
     def AUTHORIZATION_URL(self) -> str:
@@ -39,9 +40,14 @@ class WPOAuth2(BaseOAuth2):
             'id': int(response.get('ID')),
             'username': response.get('user_login'),
             'email': response.get('user_email'),
+            'first_name': response.get("first_name", ""),
+            'last_name': response.get("last_name", ""),
             'fullname': response.get('display_name'),
         }
-        logger.info('get_user_details() -  {}'.format(user_details))
+        logger.info('get_user_details() -  response: {response} user_details: {user_details}'.format(
+            response=json.dumps(response, sort_keys=True, indent=4),
+            user_details=json.dumps(user_details, sort_keys=True, indent=4)
+            ))
         return user_details
 
     def user_data(self, access_token, *args, **kwargs):
@@ -51,15 +57,20 @@ class WPOAuth2(BaseOAuth2):
         })
 
         try:
-            return json.loads(self.urlopen(url))
-        except ValueError:
+            response = json.loads(self.urlopen(url))
+            logger.info('user_data() -  response: {response}'.format(
+                response=json.dumps(response, sort_keys=True, indent=4)
+                ))
+            return response
+        except ValueError as e:
+            logger.error('user_data() did not work: {err}'.format(err=e))
             return None
 
     def urlopen(self, url):
         return urlopen(url).read().decode("utf-8")
 
-    def get_user_id(self, details, response):
-        return details['id']
+    # def get_user_id(self, details, response):
+    #     return details['id']
 
-    def get_username(self, strategy, details, backend, user=None, *args, **kwargs):
-        return details['username']
+    # def get_username(self, strategy, details, backend, user=None, *args, **kwargs):
+    #     return details['username']
