@@ -135,38 +135,43 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         tainted = False
 
         if not response:
-            logger.warning('get_user_details() -  response object is missing.')
+            logger.warning('get_user_details() - response object is missing.')
             tainted = True
 
-        if type(response)==dict:
-            # a def in the third_party_auth pipeline list calls get_user_details() after its already
-            # been called once. i don't know why. but, it passes the original get_user_details() dict
-            # enhanced with additional token-related keys. if we receive this modified dict then we 
-            # should pass it along to the next defs in the pipeline.
-            #
-            # If most of the original keys (see dict definition below) exist in the response object
-            # then we can assume that this is our case.
-            qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
-            if all(key in response for key in qc_keys):
-                if VERBOSE_LOGGING:
-                    logger.info('get_user_details() -  detected an enhanced get_user_details() dict in the response: {response}'.format(
-                        response=json.dumps(response, sort_keys=True, indent=4)
-                        ))
-                return response
+        if type(response)!=dict:
+            logger.warning('get_user_details() -  was expecting a response object of type dict but received an object of type {t}'.format(
+                t=type(response)
+            ))
+            tainted = True
 
-            # otherwise we pobably received the default response from the oauth provider based on 
-            # the scopes 'basic' 'email' 'profile'. We'll check a few of the most important keys to see
-            # if they exist.
-            if ('ID' not in response.keys()) or ('user_email' not in response.keys()) or ('user_login' not in response.keys()):
-                logger.warning('get_user_details() -  response object is missing one or more required keys: {response}'.format(
+        # a def in the third_party_auth pipeline list calls get_user_details() after its already
+        # been called once. i don't know why. but, it passes the original get_user_details() dict
+        # enhanced with additional token-related keys. if we receive this modified dict then we 
+        # should pass it along to the next defs in the pipeline.
+        #
+        # If most of the original keys (see dict definition below) exist in the response object
+        # then we can assume that this is our case.
+        qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
+        if all(key in response for key in qc_keys):
+            if VERBOSE_LOGGING:
+                logger.info('get_user_details() -  detected an enhanced get_user_details() dict in the response: {response}'.format(
                     response=json.dumps(response, sort_keys=True, indent=4)
-                ))
-                tainted = True
-            else:
-                if VERBOSE_LOGGING:
-                    logger.info('get_user_details() -  start. response: {response}'.format(
-                        response=json.dumps(response, sort_keys=True, indent=4)
-                        ))
+                    ))
+            return response
+
+        # otherwise we pobably received the default response from the oauth provider based on 
+        # the scopes 'basic' 'email' 'profile'. We'll check a few of the most important keys to see
+        # if they exist.
+        if ('ID' not in response.keys()) or ('user_email' not in response.keys()) or ('user_login' not in response.keys()):
+            logger.warning('get_user_details() -  response object is missing one or more required keys: {response}'.format(
+                response=json.dumps(response, sort_keys=True, indent=4)
+            ))
+            tainted = True
+        else:
+            if VERBOSE_LOGGING:
+                logger.info('get_user_details() -  start. response: {response}'.format(
+                    response=json.dumps(response, sort_keys=True, indent=4)
+                    ))
 
         if tainted and self._user_details:
             logger.warning('get_user_details() -  returning cached results. user_details: {user_details}'.format(
@@ -178,6 +183,9 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             logger.error('response object is missing or misformed, and no cached results were found. Cannot get user details from oauth provider.')
             return None
 
+        # ---------------------------------------------------------------------
+        # build and internally cache the get_user_details() dict
+        # ---------------------------------------------------------------------
 
         # try to parse out the first and last names
         split_name = response.get('display_name', '').split()
@@ -189,7 +197,6 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         super_user = 'administrator' in user_roles
         is_staff = 'administrator' in user_roles
 
-        # build the get_user_details() dict
         self._user_details = {
             'id': int(response.get('ID'), 0),
             'username': response.get('user_login', ''),
@@ -239,10 +246,12 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
 
         # add syncronization of any data fields that get missed by the built-in
         # open edx third party authentication sync functionality.
-        user=User.objects.get(username=user_details['username'])
-
-        if not user:
-            # this seems exceedingly unlikely, but, you never know.
+        try:
+            # this gets called just prior to account creation for
+            # new users, hence, we need to catch DoesNotExist
+            # exceptions.
+            user=User.objects.get(username=user_details['username'])
+        except User.DoesNotExist:
             return user_details
 
         if (user.is_superuser != user_details['is_superuser']) or (user.is_staff != user_details['is_staff']):
