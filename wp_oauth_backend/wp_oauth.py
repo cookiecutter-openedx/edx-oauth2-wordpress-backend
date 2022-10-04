@@ -90,24 +90,35 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     def _urlopen(self, url):
         return urlopen(url).read().decode("utf-8")
 
-    # override Python Social Auth default end points
+    # override Python Social Auth default end points.
     # see https://wp-oauth.com/docs/general/endpoints/
+    #
+    # Note that we're only implementing Python properties
+    # so that we can include logging for diagnostic purposes.
     @property
     def AUTHORIZATION_URL(self) -> str:
-        return f"{self.BASE_URL}/oauth/authorize"
+        retval = f"{self.BASE_URL}/oauth/authorize"
+        if VERBOSE_LOGGING:
+            logger.info('AUTHORIZATION_URL: {url}'.format(url=retval))
+        return retval
 
     @property
     def ACCESS_TOKEN_URL(self) -> str:
-        return f"{self.BASE_URL}/oauth/token"
+        retval = f"{self.BASE_URL}/oauth/token"
+        if VERBOSE_LOGGING:
+            logger.info('ACCESS_TOKEN_URL: {url}'.format(url=retval))
+        return retval
 
     @property
     def USER_QUERY(self) -> str:
-        return f"{self.BASE_URL}/oauth/me"
+        retval = f"{self.BASE_URL}/oauth/me"
+        if VERBOSE_LOGGING:
+            logger.info('USER_QUERY: {url}'.format(url=retval))
+        return retval
 
     # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
+    # Return user details from the Wordpress user account
     def get_user_details(self, response) -> dict:
-        """Return user details from the WP account"""
-
         if type(response)==dict:
             if ('ID' not in response.keys()) or ('user_email' not in response.keys()):
                 logger.info('get_user_details() -  response object lacks required keys. exiting.')
@@ -149,25 +160,26 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             'user_status': response.get('user_status', ''),
         }
         if VERBOSE_LOGGING:
-            logger.info('get_user_details() -  complete. user_details: {user_details}'.format(
+            logger.info('get_user_details() -  finish. user_details: {user_details}'.format(
                 user_details=json.dumps(user_details, sort_keys=True, indent=4)
                 ))
         return user_details
 
-    # implementation of user_data()
-    # note that in the case of wp oauth, the response object returned by self.USER_QUERY
+    # Load user data from service url end point. Note that in the case of 
+    # wp oauth, the response object returned by self.USER_QUERY
     # is the same as the response object passed to get_user_details().
     #
     # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     def user_data(self, access_token, *args, **kwargs) -> dict:
-        """Loads user data from service"""
-
         url = f'{self.USER_QUERY}?' + urlencode({
             'access_token': access_token
         })
 
         if VERBOSE_LOGGING:
-            logger.info("user_data() url: {url}".format(url=url))
+            logger.info("user_data() url: {url}, kwargs={kwargs}".format(
+                url=url,
+                kwargs=json.dumps(kwargs, sort_keys=True, indent=4)
+                ))
 
         try:
             response = json.loads(self._urlopen(url))
