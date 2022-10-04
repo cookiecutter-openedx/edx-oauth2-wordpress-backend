@@ -175,10 +175,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         })
 
         if VERBOSE_LOGGING:
-            logger.info("user_data() url: {url}, kwargs={kwargs}".format(
-                url=url,
-                kwargs=json.dumps(kwargs, sort_keys=True, indent=4)
-                ))
+            logger.info("user_data() url: {url}".format(url=url))
 
         try:
             response = json.loads(self._urlopen(url))
