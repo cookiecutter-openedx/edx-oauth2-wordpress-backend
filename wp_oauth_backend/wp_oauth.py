@@ -58,9 +58,12 @@ class WPOAuth2(BaseOAuth2):
         user_roles = response.get('user_roles', [])        
         super_user = 'administrator' in user_roles
 
+        # create a unique but repeatable username
+        username = response.get('user_login') + '_' + response.get('ID')
+
         user_details = {
             'id': int(response.get('ID')),
-            'username': response.get('user_login'),
+            'username': username,
             'email': response.get('user_email'),
             'first_name': first_name,
             'last_name': last_name,
