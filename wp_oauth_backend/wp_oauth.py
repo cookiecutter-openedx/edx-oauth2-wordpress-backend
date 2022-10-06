@@ -174,7 +174,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             # otherwise we pobably received the default response from the oauth provider based on 
             # the scopes 'basic' 'email' 'profile'. We'll check a few of the most important keys to see
             # if they exist.
-            qc_keys = ['ID', 'user_email', 'user_login']
+            qc_keys = ['ID' 'display_name', 'user_email', 'user_login', 'user_roles']
             if not all(key in response for key in qc_keys):
                 logger.warning('get_user_details() -  response object is missing one or more required keys: {response}'.format(
                     response=json.dumps(response, sort_keys=True, indent=4)
