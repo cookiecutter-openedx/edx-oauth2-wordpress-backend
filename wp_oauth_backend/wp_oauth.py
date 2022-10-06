@@ -143,7 +143,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         qc_keys = ['access_token' 'expires_in', 'refresh_token', 'scope', 'token_type']
         if all(key in response for key in qc_keys): return True
         return False
-        
+
     # override Python Social Auth default end points.
     # see https://wp-oauth.com/docs/general/endpoints/
     #
@@ -191,7 +191,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # Return user details from the Wordpress user account
     def get_user_details(self, response) -> dict:
         if not (self.is_valid_user_details(response) or self.is_wp_oauth_response(response)):
-            logger.error('get_user_details() -  received an unrecognized response object. Cannot conitnue: {response}'.format(
+            logger.error('get_user_details() -  received an unrecognized response object. Cannot continue: {response}'.format(
                 response=json.dumps(response, sort_keys=True, indent=4)
                 ))
             # if we have cached results then we might be able to recover.
@@ -209,7 +209,9 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         # then we can assume that this is our case.
         if self.is_wp_oauth_extended_response(response):
             # -------------------------------------------------------------
-            # expected use case #2: a potentially enhanced version of an original user_details dict.
+            # expected use case #2: an enhanced derivation of an original 
+            # user_details dict. This is created when get_user_details()
+            # is called from user_data().
             # -------------------------------------------------------------
             if VERBOSE_LOGGING:
                 logger.info('get_user_details() -  detected an enhanced get_user_details() dict in the response: {response}'.format(
@@ -233,10 +235,6 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             logger.info('get_user_details() -  start. response: {response}'.format(
                 response=json.dumps(response, sort_keys=True, indent=4)
                 ))
-
-        # ---------------------------------------------------------------------
-        # build and internally cache the get_user_details() dict
-        # ---------------------------------------------------------------------
 
         # try to parse out the first and last names
         split_name = response.get('display_name', '').split()
