@@ -17,6 +17,24 @@ working on your Open edX installation.
 Usage
 -----
 
+An example implementation for an Open edX installation named https://web.stepwisemath.ai
+
+1. add this package to your project's requiremets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+include this repo in your project's requiremets.txt, or install it from the command line.
+
+..  code-block:: shell
+
+  cd path/to/your/virtual/environment
+  source path/to/venv/bin/activate
+  pip install https://github.com/lpm0073/wp-oauth-backend
+
+2. subclass WPOpenEdxOAuth2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Subclass wp_oauth_backend.wp_oauth.WPOpenEdxOAuth2, and configure for your Wordpress oauth provider.
+
 ..  code-block:: python
 
   from wp_oauth_backend.wp_oauth import WPOpenEdxOAuth2
@@ -37,29 +55,8 @@ Usage
       # might clean this up for you, but i'm not 100% certain of that.
       BASE_URL = "https://stepwisemath.ai"
 
-
-Open edX Setup
---------------
-
-.. image:: doc/django-admin-1.png
-  :width: 100%
-  :alt: Open edX Django Admin Add Provider Configuration (OAuth)
-
-.. image:: doc/django-admin-2.png
-  :width: 100%
-  :alt: Open edX Django Admin Add Provider Configuration (OAuth)
-
-
-General Python/Django
-~~~~~~~~~~~~~~~~~~~~~
-
-include this repo in your project's requiremets.txt, or install it from the command line.
-
-..  code-block:: shell
-
-  cd path/to/your/project
-  source path/to/venv/bin/activate
-  pip install https://github.com/StepwiseMath/wp-oauth-backend
+3. configure your Open edX lms application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..  code-block:: yaml
 
@@ -89,6 +86,17 @@ add these settings to django.conf:
     - Authorization Code
   * - REDIRECT_URI
     - https://web.stepwisemath.ai/auth/complete/stepwisemath-oauth
+
+4. Configure a new Oauth2 client from the lms Django Admin console 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. image:: doc/django-admin-1.png
+  :width: 100%
+  :alt: Open edX Django Admin Add Provider Configuration (OAuth)
+
+.. image:: doc/django-admin-2.png
+  :width: 100%
+  :alt: Open edX Django Admin Add Provider Configuration (OAuth)
 
 
 Cookiecutter openedx_devops build
