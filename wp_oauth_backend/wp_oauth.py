@@ -137,6 +137,12 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     def user_details(self, value: dict):
         self._user_details = value
 
+    def is_valid_user_details(self, response) -> bool:
+        if not type(response) == dict: return False
+        qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
+        if all(key in response for key in qc_keys): return True
+        return False
+
     # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     # Return user details from the Wordpress user account
     def get_user_details(self, response) -> dict:
@@ -160,8 +166,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             #
             # If most of the original keys (see dict definition below) exist in the response object
             # then we can assume that this is our case.
-            qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
-            if all(key in response for key in qc_keys):
+            if self.is_valid_user_details(response):
                 # -------------------------------------------------------------
                 # expected use case #2: a potentially enhanced version of an original user_details dict.
                 # -------------------------------------------------------------
@@ -250,14 +255,16 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
 
         try:
             response = json.loads(self._urlopen(url))
-            self.get_user_details(response)
         except ValueError as e:
             logger.error('user_data() {err}'.format(err=e))
             return None
 
-        if not self.user_details or type(self.user_details) != dict or 'username' not in self.user_details.keys():
-            # we should never find ourselves here.
+        if not self.is_valid_user_details(response):
             return self.user_details
+        
+        # refresh our internal user_details property after having validated
+        # response from USER_QUERY
+        self.get_user_details(response)
 
         # add syncronization of any data fields that get missed by the built-in
         # open edx third party authentication sync functionality.
