@@ -111,9 +111,16 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         validate that the object passed is a dict containing at least the keys 
         in qc_keys.
         """
-        if not type(response) == dict: return False
+        if not type(response) == dict: 
+            logger.warning('is_valid_user_details() was expecting a dict but received an object of type: {type}'.format(
+                type=type(response)
+            ))
+            return False
         qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
         if all(key in response for key in qc_keys): return True
+        logger.warning('is_valid_user_details() received an invalid response: {response}'.format(
+            response=json.dumps(response, sort_keys=True, indent=4)
+        ))
         return False
 
     def is_wp_oauth_response(self, response) -> bool:
@@ -121,11 +128,27 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         validate the structure of the response object from wp-oauth. it's 
         supposed to be a dict with at least the keys included in qc_keys.
         """
-        if not type(response) == dict: return False
+        if not type(response) == dict: 
+            logger.warning('is_valid_user_details() was expecting a dict but received an object of type: {type}'.format(
+                type=type(response)
+            ))
+            return False
         qc_keys = ['ID' 'display_name', 'user_email', 'user_login', 'user_roles']
         if all(key in response for key in qc_keys): return True
+        logger.warning('is_wp_oauth_response() received an invalid response: {response}'.format(
+            response=json.dumps(response, sort_keys=True, indent=4)
+        ))
         return False
 
+    def is_wp_oauth_extended_response(self, response) -> bool:
+        """
+        validate the structure of the extended response object from wp-oauth. it's 
+        supposed to be a dict with at least the keys included in qc_keys.
+        """
+        if not self.is_valid_user_details(response): return False
+        qc_keys = ['access_token' 'expires_in', 'refresh_token', 'scope', 'token_type']
+        if all(key in response for key in qc_keys): return True
+        return False
     # override Python Social Auth default end points.
     # see https://wp-oauth.com/docs/general/endpoints/
     #
@@ -159,6 +182,10 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     @user_details.setter
     def user_details(self, value: dict):
         if self.is_valid_user_details(value):
+            if VERBOSE_LOGGING:
+                logger.info('user_details.setter: new value set {value}'.format(
+                    value=json.dumps(value, sort_keys=True, indent=4)
+                ))
             self._user_details = value
         else:
             logger.error('user_details.setter: tried to pass an invalid object {value}'.format(
@@ -168,62 +195,49 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     # Return user details from the Wordpress user account
     def get_user_details(self, response) -> dict:
-        tainted = False
-
-        if not response:
-            logger.warning('get_user_details() - response object is missing.')
-            tainted = True
-
-        if type(response)!=dict:
-            logger.warning('get_user_details() -  was expecting a response object of type dict but received an object of type {t}'.format(
-                t=type(response)
-            ))
-            tainted = True
-
-        if not tainted:
-            # a def in the third_party_auth pipeline list calls get_user_details() after its already
-            # been called once. i don't know why. but, it passes the original get_user_details() dict
-            # enhanced with additional token-related keys. if we receive this modified dict then we 
-            # should pass it along to the next defs in the pipeline.
-            #
-            # If most of the original keys (see dict definition below) exist in the response object
-            # then we can assume that this is our case.
-            if self.is_valid_user_details(response):
-                # -------------------------------------------------------------
-                # expected use case #2: a potentially enhanced version of an original user_details dict.
-                # -------------------------------------------------------------
-                if VERBOSE_LOGGING:
-                    logger.info('get_user_details() -  detected an enhanced get_user_details() dict in the response: {response}'.format(
-                        response=json.dumps(response, sort_keys=True, indent=4)
-                        ))
-                return response
-
-            # otherwise we pobably received the default response from the oauth provider based on 
-            # the scopes 'basic' 'email' 'profile'. We'll check a few of the most important keys to see
-            # if they exist.
-            if not self.is_wp_oauth_response(response):
-                logger.warning('get_user_details() -  response object is missing one or more required keys: {response}'.format(
-                    response=json.dumps(response, sort_keys=True, indent=4)
+        if not (self.is_valid_user_details(response) or self.is_wp_oauth_response(response)):
+            logger.error('get_user_details() -  received an unrecognized response object. Cannot conitnue: {response}'.format(
+                response=json.dumps(response, sort_keys=True, indent=4)
                 ))
-                tainted = True
-            else:
-                # -------------------------------------------------------------
-                # expected use case #1: response object is a dict with all required keys.
-                # -------------------------------------------------------------
-                if VERBOSE_LOGGING:
-                    logger.info('get_user_details() -  start. response: {response}'.format(
-                        response=json.dumps(response, sort_keys=True, indent=4)
-                        ))
+            # if we have cached results then we might be able to recover.
+            return self.user_details
 
-        if tainted and self.user_details:
-            logger.warning('get_user_details() -  returning cached results. user_details: {user_details}'.format(
-                user_details=json.dumps(self.user_details, sort_keys=True, indent=4)
+        if VERBOSE_LOGGING: logger.info('get_user_details() begin with response: {response}'.format(
+            response=json.dumps(response, sort_keys=True, indent=4)
+        ))
+        # a def in the third_party_auth pipeline list calls get_user_details() after its already
+        # been called once. i don't know why. but, it passes the original get_user_details() dict
+        # enhanced with additional token-related keys. if we receive this modified dict then we 
+        # should pass it along to the next defs in the pipeline.
+        #
+        # If most of the original keys (see dict definition below) exist in the response object
+        # then we can assume that this is our case.
+        if self.is_wp_oauth_extended_response(response):
+            # -------------------------------------------------------------
+            # expected use case #2: a potentially enhanced version of an original user_details dict.
+            # -------------------------------------------------------------
+            if VERBOSE_LOGGING:
+                logger.info('get_user_details() -  detected an enhanced get_user_details() dict in the response: {response}'.format(
+                    response=json.dumps(response, sort_keys=True, indent=4)
+                    ))
+            return response
+
+        # at this point we've ruled out the possibility of the response object 
+        # being a derivation of a user_details dict. So, it should therefore
+        # conform to the structure of a wp-oauth dict. 
+        if not self.is_wp_oauth_response(response):
+            logger.warning('get_user_details() -  response object is not a valid wp-oauth object. Cannot continue. {response}'.format(
+                response=json.dumps(response, sort_keys=True, indent=4)
             ))
             return self.user_details
 
-        if tainted:
-            logger.error('response object is missing or misformed, and no cached results were found. Cannot get user details from oauth provider.')
-            return None
+        # -------------------------------------------------------------
+        # expected use case #1: response object is a dict with all required keys.
+        # -------------------------------------------------------------
+        if VERBOSE_LOGGING:
+            logger.info('get_user_details() -  start. response: {response}'.format(
+                response=json.dumps(response, sort_keys=True, indent=4)
+                ))
 
         # ---------------------------------------------------------------------
         # build and internally cache the get_user_details() dict
@@ -281,6 +295,9 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             return None
 
         if not self.is_valid_user_details(response):
+            logger.error('user_data() response object is invalid: {response}'.format(
+                response=json.dumps(self.user_details, sort_keys=True, indent=4)
+            ))
             return self.user_details
         
         # refresh our internal user_details property after having validated
