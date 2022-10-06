@@ -99,8 +99,10 @@ add these settings to django.conf:
   :alt: Open edX Django Admin Add Provider Configuration (OAuth)
 
 
+5. Configure your devops
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 Cookiecutter openedx_devops build
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..  code-block:: shell
 
@@ -114,7 +116,6 @@ Cookiecutter openedx_devops build
 
 
 Cookiecutter openedx_devops deployment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..  code-block:: shell
 
