@@ -86,8 +86,7 @@ in https://stepwisemath.ai/, configured as follows:
   :width: 100%
   :alt: WP Oauth configuration page
 
+Sample lms log output
+---------------------
 
-.. include:: doc/lms.log
-   :text:
-
-  
+`lms.log <./doc/lms.log>`_
