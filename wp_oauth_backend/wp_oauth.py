@@ -10,7 +10,6 @@ usage:          subclass of BaseOAuth2 Third Party Authtencation client to
                 actually needs.
 """
 import json
-import re
 from urllib.parse import urlencode
 from urllib.request import urlopen
 from logging import getLogger
