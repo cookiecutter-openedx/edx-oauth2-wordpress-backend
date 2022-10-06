@@ -285,14 +285,17 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             # user_details dict. This is created when get_user_details()
             # is called from user_data().
             # -------------------------------------------------------------
+            self.user_details = response
             if VERBOSE_LOGGING:
                 logger.info(
                     "get_user_details() returning {t}: {response}".format(
                         t=self.get_response_type(response),
-                        response=json.dumps(response, sort_keys=True, indent=4),
+                        response=json.dumps(
+                            self.user_details, sort_keys=True, indent=4
+                        ),
                     )
                 )
-            return response
+            return self.user_details
 
         # at this point we've ruled out the possibility of the response object
         # being a derivation of a user_details dict. So, it should therefore
