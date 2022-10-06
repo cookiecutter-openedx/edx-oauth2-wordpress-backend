@@ -23,7 +23,7 @@ logger = getLogger(__name__)
 VERBOSE_LOGGING = True
 
 
-class StepwiseMathWPOAuth2(BaseOAuth2):
+class WPOpenEdxOAuth2(BaseOAuth2):
     """
     WP OAuth authentication backend customized for Open edX.
     see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
@@ -49,11 +49,11 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # Third Party Authentication / Provider Configuration (OAuth)
     # setup page drop-down box titled, "Backend name:", just above
     # the "Client ID:" and "Client Secret:" fields.
-    name = "stepwisemath-oauth"
+    name = "wp-oauth"
 
     # note: no slash at the end of the base url. Python Social Auth
     # might clean this up for you, but i'm not 100% certain of that.
-    BASE_URL = "https://stepwisemath.ai"
+    BASE_URL = "https://set-me-please.com"
 
     # The default key name where the user identification field is defined, it’s
     # used in the auth process when some basic user data is returned. This Id
@@ -144,7 +144,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         wp-oauth error json dict.
         """
         qc_keys = ["error" "error_description"]
-        return self.is_valid_dict(response, qc_keys) and len(response.keys()) == 2
+        return self.is_valid_dict(response, qc_keys)
 
     def is_wp_oauth_response(self, response) -> bool:
         """

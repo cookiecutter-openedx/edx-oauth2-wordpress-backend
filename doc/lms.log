@@ -1,79 +1,12 @@
-[uwsgi-static] added mapping for /static => /openedx/staticfiles/
-[uwsgi-static] added mapping for /media => /openedx/media/
-*** Starting uWSGI 2.0.20 (64bit) on [Thu Oct  6 17:10:24 2022] ***
-compiled with version: 9.4.0 on 06 October 2022 16:36:30
-os: Linux-5.4.209-116.363.amzn2.x86_64 #1 SMP Wed Aug 10 21:19:18 UTC 2022
-nodename: lms-56998b7849-59cll
-machine: x86_64
-clock source: unix
-detected number of CPU cores: 2
-current working directory: /openedx/edx-platform
-detected binary path: /openedx/venv/bin/uwsgi
-!!! no internal routing support, rebuild with pcre support !!!
-*** WARNING: you are running uWSGI without its master process manager ***
-your memory page size is 4096 bytes
-detected max file descriptor number: 1048576
-building mime-types dictionary from file /etc/mime.types...567 entry found
-lock engine: pthread robust mutexes
-thunder lock: enabled
-uWSGI http bound on 0.0.0.0:8000 fd 4
-spawned uWSGI http 1 (pid: 8)
-uwsgi socket 0 bound to TCP address 127.0.0.1:43683 (port auto-assigned) fd 3
-Python version: 3.8.12 (default, Oct  6 2022, 16:25:43)  [GCC 9.4.0]
-Python main interpreter initialized at 0x55e50291d070
-python threads support enabled
-your server socket listen backlog is limited to 100 connections
-your mercy for graceful operations on workers is 60 seconds
-mapped 154032 bytes (150 KB) for 2 cores
-*** Operational MODE: preforking ***
-2022-10-06 17:10:38,886 INFO 7 [stepwise_plugin.apps] [user None] [ip None] apps.py:45 - stepwise_plugin is ready.
-WSGI app 0 (mountpoint='') ready in 16 seconds on interpreter 0x55e50291d070 pid: 7 (default app)
-spawned uWSGI worker 1 (pid: 7, cores: 1)
-spawned uWSGI worker 2 (pid: 19, cores: 1)
-2022-10-06 17:10:40,996 INFO 7 [tracking] [user None] [ip 192.168.5.143] logger.py:41 - {"name": "/", "context": {"user_id": null, "path": "/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "efc4e03a6eb4264dbbd70fd1bd30601f", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T17:10:40.994408+00:00", "event_type": "/", "event_source": "server", "page": null}
-2022-10-06 17:10:42,099 WARNING 7 [openedx.core.djangoapps.catalog.utils] [user None] [ip 192.168.5.143] utils.py:134 - Failed to get program UUIDs from the cache for site web.stepwisemath.ai.
-[pid: 7|app: 0|req: 1/1] 192.168.4.4 () {66 vars in 1707 bytes} [Thu Oct  6 17:10:40 2022] GET / => generated 24182 bytes in 2790 msecs (HTTP/1.1 200) 6 headers in 340 bytes (1 switches on core 0)
-[pid: 19|app: -1|req: -1/2] 192.168.4.4 () {66 vars in 1702 bytes} [Thu Oct  6 17:10:43 2022] GET /static/js/i18n/en/djangojs.705ead69114e.js => generated 3281 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/3] 192.168.4.4 () {66 vars in 1700 bytes} [Thu Oct  6 17:10:43 2022] GET /static/js/ie11_find_array.bd1c6dc7a133.js => generated 1685 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/4] 192.168.4.4 () {66 vars in 1758 bytes} [Thu Oct  6 17:10:43 2022] GET /static/stepwise-edx-theme/css/lms-style-vendor.68e48093f5dd.css => generated 36962 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 112 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/5] 192.168.4.4 () {66 vars in 1748 bytes} [Thu Oct  6 17:10:43 2022] GET /static/stepwise-edx-theme/css/lms-main-v1.25b10a7d0738.css => generated 978210 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 113 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/6] 192.168.4.4 () {66 vars in 1700 bytes} [Thu Oct  6 17:10:43 2022] GET /static/js/lms-main_vendor.3c3c9a2604d6.js => generated 585680 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 127 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/7] 192.168.4.4 () {66 vars in 1700 bytes} [Thu Oct  6 17:10:43 2022] GET /static/js/lms-application.98d9a8549a03.js => generated 514731 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 127 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/8] 192.168.4.4 () {66 vars in 1736 bytes} [Thu Oct  6 17:10:43 2022] GET /static/bundles/commons.8c2395c2d982f7b9fe50.98e30a96357e.js => generated 410629 bytes in 1 msecs via sendfile() (HTTP/1.1 200) 3 headers in 127 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/9] 192.168.4.4 () {66 vars in 1706 bytes} [Thu Oct  6 17:10:43 2022] GET /static/lms/js/require-config.38226099c6ad.js => generated 9017 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 7|app: -1|req: -1/10] 192.168.4.4 () {66 vars in 1746 bytes} [Thu Oct  6 17:10:43 2022] GET /static/stepwise-edx-theme/css/rover/main.d41d8cd98f00.css => generated 0 bytes in 0 msecs (HTTP/1.1 200) 3 headers in 108 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/11] 192.168.4.4 () {66 vars in 1704 bytes} [Thu Oct  6 17:10:45 2022] GET /static/js/vendor/noreferrer.aa62a3e70ffa.js => generated 1236 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 7|app: -1|req: -1/12] 192.168.4.4 () {66 vars in 1702 bytes} [Thu Oct  6 17:10:45 2022] GET /static/js/utils/navigation.08930e16ab3d.js => generated 4438 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 7|app: -1|req: -1/13] 192.168.4.4 () {66 vars in 1695 bytes} [Thu Oct  6 17:10:45 2022] GET /static/js/header/header.309a1243e175.js => generated 7848 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 7|app: -1|req: -1/14] 192.168.4.4 () {66 vars in 1715 bytes} [Thu Oct  6 17:10:45 2022] GET /static/js/src/jquery_extend_patch.54dddef28d15.js => generated 2812 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 7|app: 0|req: 2/15] 192.168.4.4 () {64 vars in 1790 bytes} [Thu Oct  6 17:10:45 2022] GET /asset-v1:Querium_University+WARN102+Sample2+type@asset+block@images_course_image.jpg => generated 292992 bytes in 92 msecs (HTTP/1.1 200) 6 headers in 175 bytes (1 switches on core 0)
-[pid: 7|app: 0|req: 3/16] 192.168.4.4 () {64 vars in 1791 bytes} [Thu Oct  6 17:10:45 2022] GET /asset-v1:Querium_University+WARN102+Sample1+type@asset+block@images_course_image.jpg => generated 292992 bytes in 79 msecs (HTTP/1.1 200) 6 headers in 175 bytes (1 switches on core 0)
-[pid: 7|app: 0|req: 4/17] 192.168.4.4 () {64 vars in 1809 bytes} [Thu Oct  6 17:10:45 2022] GET /asset-v1:Querium_University+EISD_CL_Phase1+Fall_2022+type@asset+block@images_course_image.jpg => generated 0 bytes in 37 msecs (HTTP/1.1 404) 3 headers in 99 bytes (1 switches on core 0)
-[pid: 7|app: 0|req: 5/18] 192.168.4.4 () {66 vars in 1838 bytes} [Thu Oct  6 17:10:45 2022] GET /asset-v1:stepwisemath+DEMO101+revd+type@asset+block@college_algebra_bookcard.png => generated 0 bytes in 65 msecs (HTTP/1.1 304) 2 headers in 62 bytes (0 switches on core 0)
-[pid: 7|app: 0|req: 6/19] 192.168.4.4 () {66 vars in 1830 bytes} [Thu Oct  6 17:10:45 2022] GET /asset-v1:stepwisemath+DEMO101+reve+type@asset+block@precalculus_bookcard.png => generated 0 bytes in 57 msecs (HTTP/1.1 304) 2 headers in 62 bytes (0 switches on core 0)
-2022-10-06 17:10:45,802 INFO 7 [tracking] [user None] [ip 192.168.5.143] logger.py:41 - {"name": "/stepwise/api/v1/configuration/prod", "context": {"user_id": null, "path": "/stepwise/api/v1/configuration/prod", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "efc4e03a6eb4264dbbd70fd1bd30601f", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T17:10:45.801743+00:00", "event_type": "/stepwise/api/v1/configuration/prod", "event_source": "server", "page": null}
-[pid: 7|app: 0|req: 7/20] 192.168.4.4 () {68 vars in 1750 bytes} [Thu Oct  6 17:10:45 2022] GET /stepwise/api/v1/configuration/prod => generated 167 bytes in 54 msecs (HTTP/1.1 200) 6 headers in 189 bytes (1 switches on core 0)
-[pid: 7|app: -1|req: -1/21] 192.168.4.4 () {68 vars in 1849 bytes} [Thu Oct  6 17:10:45 2022] GET /static/fonts/vendor/fontawesome-webfont.e6cf7c6ec7c2.woff2?v=4.6.3 => generated 71896 bytes in 1 msecs via sendfile() (HTTP/1.1 200) 3 headers in 114 bytes (0 switches on core 0)
-[pid: 7|app: -1|req: -1/22] 192.168.4.4 () {64 vars in 1654 bytes} [Thu Oct  6 17:10:45 2022] GET /static/js/dateutil_factory.a28baef97506.js?raw => generated 431182 bytes in 8 msecs via sendfile() (HTTP/1.1 200) 3 headers in 127 bytes (0 switches on core 0)
-/openedx/venv/lib/python3.8/site-packages/pymongo/topology.py:164: UserWarning: MongoClient opened before fork. Create MongoClient only after forking. See PyMongo's documentation for details: https://pymongo.readthedocs.io/en/stable/faq.html#is-pymongo-fork-safe
-  warnings.warn(
-[pid: 19|app: 0|req: 1/23] 192.168.4.4 () {64 vars in 1793 bytes} [Thu Oct  6 17:10:45 2022] GET /asset-v1:Querium_University+WARN102+fred_test+type@asset+block@images_course_image.jpg => generated 292992 bytes in 597 msecs (HTTP/1.1 200) 6 headers in 175 bytes (1 switches on core 0)
-[pid: 7|app: 0|req: 8/24] 192.168.4.4 () {68 vars in 1785 bytes} [Thu Oct  6 17:10:47 2022] GET /login?next=%2F => generated 36862 bytes in 151 msecs (HTTP/1.1 200) 9 headers in 916 bytes (1 switches on core 0)
-[pid: 19|app: -1|req: -1/25] 192.168.4.4 () {66 vars in 1714 bytes} [Thu Oct  6 17:10:48 2022] GET /static/js/lms-base-vendor.188b06b0a06d.js => generated 327113 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 127 bytes (0 switches on core 0)
-[pid: 7|app: -1|req: -1/26] 192.168.4.4 () {66 vars in 1724 bytes} [Thu Oct  6 17:10:48 2022] GET /static/js/lms-base-application.8c893365eb2c.js => generated 13719 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 126 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/27] 192.168.4.4 () {66 vars in 1763 bytes} [Thu Oct  6 17:10:49 2022] GET /static/js/student_account/logistration_factory.5cfe73759a4f.js?raw => generated 123632 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 127 bytes (0 switches on core 0)
-2022-10-06 17:10:49,351 INFO 7 [tracking] [user None] [ip 192.168.5.143] logger.py:41 - {"name": "/stepwise/api/v1/configuration/prod", "context": {"user_id": null, "path": "/stepwise/api/v1/configuration/prod", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "efc4e03a6eb4264dbbd70fd1bd30601f", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/login?next=%2F", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T17:10:49.350992+00:00", "event_type": "/stepwise/api/v1/configuration/prod", "event_source": "server", "page": null}
-[pid: 7|app: 0|req: 9/28] 192.168.4.4 () {68 vars in 1764 bytes} [Thu Oct  6 17:10:49 2022] GET /stepwise/api/v1/configuration/prod => generated 167 bytes in 34 msecs (HTTP/1.1 200) 6 headers in 189 bytes (1 switches on core 0)
-[pid: 19|app: -1|req: -1/29] 192.168.4.4 () {66 vars in 1698 bytes} [Thu Oct  6 17:10:49 2022] GET /static/js/vendor/jquery.cookie.js => generated 1941 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-2022-10-06 17:10:51,094 INFO 7 [tracking] [user None] [ip 192.168.5.143] logger.py:41 - {"name": "/auth/login/stepwisemath-oauth/", "context": {"user_id": null, "path": "/auth/login/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "efc4e03a6eb4264dbbd70fd1bd30601f", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/login?next=%2F", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {\"auth_entry\": [\"login\"], \"next\": [\"/\"]}, \"POST\": {}}", "time": "2022-10-06T17:10:51.094474+00:00", "event_type": "/auth/login/stepwisemath-oauth/", "event_source": "server", "page": null}
-2022-10-06 17:10:51,105 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:232 - AUTHORIZATION_URL: https://stepwisemath.ai/oauth/authorize
-[pid: 7|app: 0|req: 10/30] 192.168.4.4 () {68 vars in 1883 bytes} [Thu Oct  6 17:10:51 2022] GET /auth/login/stepwisemath-oauth/?auth_entry=login&next=%2F => generated 0 bytes in 37 msecs (HTTP/1.1 302) 9 headers in 922 bytes (1 switches on core 0)
-2022-10-06 17:10:53,261 INFO 19 [tracking] [user None] [ip 192.168.5.143] logger.py:41 - {"name": "/auth/complete/stepwisemath-oauth/", "context": {"user_id": null, "path": "/auth/complete/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "efc4e03a6eb4264dbbd70fd1bd30601f", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {\"redirect_state\": [\"V1oalDl6qdC8c8JiC7PLWhf1BMPNEXGo\"], \"code\": [\"51kd3gnf8xgofxpsaf6k1pxj60vjmoizvbwkbjhs\"], \"state\": [\"V1oalDl6qdC8c8JiC7PLWhf1BMPNEXGo\"], \"iframe\": [\"break\"]}, \"POST\": {}}", "time": "2022-10-06T17:10:53.260697+00:00", "event_type": "/auth/complete/stepwisemath-oauth/", "event_source": "server", "page": null}
-2022-10-06 17:10:53,899 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:239 - ACCESS_TOKEN_URL: https://stepwisemath.ai/oauth/token
-2022-10-06 17:10:55,213 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:246 - USER_QUERY: https://stepwisemath.ai/oauth/me
-2022-10-06 17:10:55,214 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:378 - user_data() url: https://stepwisemath.ai/oauth/me?access_token=bftc1ostvp3fucj9sxzkdgonnhcoi9uuqq2da93m
-2022-10-06 17:10:57,033 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:383 - user_data() response: {
-    "ID": "6",
+2022-10-06 20:17:08,832 INFO 19 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/auth/login/stepwisemath-oauth/", "context": {"user_id": null, "path": "/auth/login/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/login", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {\"auth_entry\": [\"login\"], \"next\": [\"/dashboard\"]}, \"POST\": {}}", "time": "2022-10-06T20:17:08.832684+00:00", "event_type": "/auth/login/stepwisemath-oauth/", "event_source": "server", "page": null}
+2022-10-06 20:17:09,230 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:216 - AUTHORIZATION_URL: https://stepwisemath.ai/oauth/authorize
+[pid: 19|app: 0|req: 2/19] 192.168.4.4 () {68 vars in 1889 bytes} [Thu Oct  6 20:17:08 2022] GET /auth/login/stepwisemath-oauth/?auth_entry=login&next=%2Fdashboard => generated 0 bytes in 430 msecs (HTTP/1.1 302) 9 headers in 922 bytes (1 switches on core 0)
+2022-10-06 20:17:38,485 INFO 7 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/auth/complete/stepwisemath-oauth/", "context": {"user_id": null, "path": "/auth/complete/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://stepwisemath.ai/", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {\"redirect_state\": [\"pdbIKIcEbhjVr3Kon5VXUWWiy5kuX921\"], \"code\": [\"q0antmap4qfamd6pe24jh75pdprahpdiyitmut0o\"], \"state\": [\"pdbIKIcEbhjVr3Kon5VXUWWiy5kuX921\"], \"iframe\": [\"break\"]}, \"POST\": {}}", "time": "2022-10-06T20:17:38.484675+00:00", "event_type": "/auth/complete/stepwisemath-oauth/", "event_source": "server", "page": null}
+2022-10-06 20:17:38,496 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:223 - ACCESS_TOKEN_URL: https://stepwisemath.ai/oauth/token
+2022-10-06 20:17:40,197 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:230 - USER_QUERY: https://stepwisemath.ai/oauth/me
+2022-10-06 20:17:40,197 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:363 - user_data() url: https://stepwisemath.ai/oauth/me?access_token=jx2zql9fw2jx9s7tayik4ybfjrmuhb7m5csb1mtl
+2022-10-06 20:17:41,965 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:368 - user_data() response: {
+    "ID": "7",
     "capabilities": {
         "access_white_label_branding": true,
         "activate_plugins": true,
@@ -160,18 +93,18 @@ spawned uWSGI worker 2 (pid: 19, cores: 1)
         "wf2fa_manage_settings": true,
         "wpseo_manage_options": true
     },
-    "display_name": "Lawrence McDaniel",
-    "user_email": "lpm0073@gmail.com",
-    "user_login": "mcdaniel",
-    "user_nicename": "mcdaniel",
-    "user_registered": "2022-10-04 00:46:37",
+    "display_name": "Test McBugster",
+    "user_email": "test@stepwisemath.ai",
+    "user_login": "testaccount",
+    "user_nicename": "testaccount",
+    "user_registered": "2022-10-06 19:57:56",
     "user_roles": [
         "administrator"
     ],
     "user_status": "0"
 }
-2022-10-06 17:10:57,039 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:286 - get_user_details() begin with response: {
-    "ID": "6",
+2022-10-06 20:17:41,966 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:269 - get_user_details() received wp-oauth user data response json dict: {
+    "ID": "7",
     "capabilities": {
         "access_white_label_branding": true,
         "activate_plugins": true,
@@ -258,227 +191,123 @@ spawned uWSGI worker 2 (pid: 19, cores: 1)
         "wf2fa_manage_settings": true,
         "wpseo_manage_options": true
     },
-    "display_name": "Lawrence McDaniel",
-    "user_email": "lpm0073@gmail.com",
-    "user_login": "mcdaniel",
-    "user_nicename": "mcdaniel",
-    "user_registered": "2022-10-04 00:46:37",
+    "display_name": "Test McBugster",
+    "user_email": "test@stepwisemath.ai",
+    "user_login": "testaccount",
+    "user_nicename": "testaccount",
+    "user_registered": "2022-10-06 19:57:56",
     "user_roles": [
         "administrator"
     ],
     "user_status": "0"
 }
-2022-10-06 17:10:57,040 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:328 - get_user_details() -  start. response: {
-    "ID": "6",
-    "capabilities": {
-        "access_white_label_branding": true,
-        "activate_plugins": true,
-        "administrator": true,
-        "copy_posts": true,
-        "create_roles": true,
-        "create_users": true,
-        "delete_others_pages": true,
-        "delete_others_posts": true,
-        "delete_pages": true,
-        "delete_plugins": true,
-        "delete_posts": true,
-        "delete_private_pages": true,
-        "delete_private_posts": true,
-        "delete_published_pages": true,
-        "delete_published_posts": true,
-        "delete_roles": true,
-        "delete_themes": true,
-        "delete_users": true,
-        "edit_dashboard": true,
-        "edit_files": true,
-        "edit_others_pages": true,
-        "edit_others_posts": true,
-        "edit_pages": true,
-        "edit_plugins": true,
-        "edit_posts": true,
-        "edit_private_pages": true,
-        "edit_private_posts": true,
-        "edit_published_pages": true,
-        "edit_published_posts": true,
-        "edit_roles": true,
-        "edit_theme_options": true,
-        "edit_themes": true,
-        "edit_users": true,
-        "export": true,
-        "import": true,
-        "install_plugins": true,
-        "install_themes": true,
-        "level_0": true,
-        "level_1": true,
-        "level_10": true,
-        "level_2": true,
-        "level_3": true,
-        "level_4": true,
-        "level_5": true,
-        "level_6": true,
-        "level_7": true,
-        "level_8": true,
-        "level_9": true,
-        "list_roles": true,
-        "list_users": true,
-        "manage_categories": true,
-        "manage_links": true,
-        "manage_options": true,
-        "moderate_comments": true,
-        "promote_users": true,
-        "publish_pages": true,
-        "publish_posts": true,
-        "read": true,
-        "read_private_pages": true,
-        "read_private_posts": true,
-        "remove_users": true,
-        "restrict_content": true,
-        "rocket_manage_options": true,
-        "rocket_preload_cache": true,
-        "rocket_purge_cache": true,
-        "rocket_purge_cloudflare_cache": true,
-        "rocket_purge_opcache": true,
-        "rocket_purge_posts": true,
-        "rocket_purge_sucuri_cache": true,
-        "rocket_purge_terms": true,
-        "rocket_purge_users": true,
-        "rocket_regenerate_critical_css": true,
-        "rocket_remove_unused_css": true,
-        "switch_themes": true,
-        "unfiltered_html": true,
-        "unfiltered_upload": true,
-        "update_core": true,
-        "update_plugins": true,
-        "update_themes": true,
-        "upload_files": true,
-        "wf2fa_activate_2fa_others": true,
-        "wf2fa_activate_2fa_self": true,
-        "wf2fa_manage_settings": true,
-        "wpseo_manage_options": true
-    },
-    "display_name": "Lawrence McDaniel",
-    "user_email": "lpm0073@gmail.com",
-    "user_login": "mcdaniel",
-    "user_nicename": "mcdaniel",
-    "user_registered": "2022-10-04 00:46:37",
-    "user_roles": [
-        "administrator"
-    ],
-    "user_status": "0"
-}
-2022-10-06 17:10:57,041 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:257 - user_details.setter: new value set {
-    "date_joined": "2022-10-04 00:46:37",
-    "email": "lpm0073@gmail.com",
-    "first_name": "Lawrence",
-    "fullname": "Lawrence McDaniel",
-    "id": 6,
+2022-10-06 20:17:41,966 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:317 - get_user_details() processing response object
+2022-10-06 20:17:41,966 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:241 - user_details.setter: new value set {
+    "date_joined": "2022-10-06 19:57:56",
+    "email": "test@stepwisemath.ai",
+    "first_name": "Test",
+    "fullname": "Test McBugster",
+    "id": 7,
     "is_staff": true,
     "is_superuser": true,
-    "last_name": "McDaniel",
+    "last_name": "McBugster",
     "refresh_token": "",
     "scope": "",
     "token_type": "",
     "user_status": "0",
-    "username": "mcdaniel"
+    "username": "testaccount"
 }
-2022-10-06 17:10:57,041 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:360 - get_user_details() -  finish. user_details: {
-    "date_joined": "2022-10-04 00:46:37",
-    "email": "lpm0073@gmail.com",
-    "first_name": "Lawrence",
-    "fullname": "Lawrence McDaniel",
-    "id": 6,
+2022-10-06 20:17:41,967 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:345 - get_user_details() returning: {
+    "date_joined": "2022-10-06 19:57:56",
+    "email": "test@stepwisemath.ai",
+    "first_name": "Test",
+    "fullname": "Test McBugster",
+    "id": 7,
     "is_staff": true,
     "is_superuser": true,
-    "last_name": "McDaniel",
+    "last_name": "McBugster",
     "refresh_token": "",
     "scope": "",
     "token_type": "",
     "user_status": "0",
-    "username": "mcdaniel"
+    "username": "testaccount"
 }
-2022-10-06 17:10:57,041 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:392 - user_data() local variable user_details: {
-    "date_joined": "2022-10-04 00:46:37",
-    "email": "lpm0073@gmail.com",
-    "first_name": "Lawrence",
-    "fullname": "Lawrence McDaniel",
-    "id": 6,
-    "is_staff": true,
-    "is_superuser": true,
-    "last_name": "McDaniel",
-    "refresh_token": "",
-    "scope": "",
-    "token_type": "",
-    "user_status": "0",
-    "username": "mcdaniel"
-}
-2022-10-06 17:10:57,041 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:398 - user_data() class property value of self.user_details: {
-    "date_joined": "2022-10-04 00:46:37",
-    "email": "lpm0073@gmail.com",
-    "first_name": "Lawrence",
-    "fullname": "Lawrence McDaniel",
-    "id": 6,
-    "is_staff": true,
-    "is_superuser": true,
-    "last_name": "McDaniel",
-    "refresh_token": "",
-    "scope": "",
-    "token_type": "",
-    "user_status": "0",
-    "username": "mcdaniel"
-}
-2022-10-06 17:10:57,046 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:286 - get_user_details() begin with response: {
-    "access_token": "bftc1ostvp3fucj9sxzkdgonnhcoi9uuqq2da93m",
-    "date_joined": "2022-10-04 00:46:37",
-    "email": "lpm0073@gmail.com",
+2022-10-06 20:17:41,972 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:269 - get_user_details() received extended get_user_details() return dict: {
+    "access_token": "jx2zql9fw2jx9s7tayik4ybfjrmuhb7m5csb1mtl",
+    "date_joined": "2022-10-06 19:57:56",
+    "email": "test@stepwisemath.ai",
     "expires_in": 3600,
-    "first_name": "Lawrence",
-    "fullname": "Lawrence McDaniel",
-    "id": 6,
+    "first_name": "Test",
+    "fullname": "Test McBugster",
+    "id": 7,
     "is_staff": true,
     "is_superuser": true,
-    "last_name": "McDaniel",
+    "last_name": "McBugster",
     "refresh_token": "",
     "scope": "",
     "token_type": "",
     "user_status": "0",
-    "username": "mcdaniel"
+    "username": "testaccount"
 }
-2022-10-06 17:10:57,046 WARNING 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.5.143] wp_oauth.py:316 - get_user_details() -  response object of get_user_details() return dict is not a valid wp-oauth object. Cannot continue. {
-    "access_token": "bftc1ostvp3fucj9sxzkdgonnhcoi9uuqq2da93m",
-    "date_joined": "2022-10-04 00:46:37",
-    "email": "lpm0073@gmail.com",
+2022-10-06 20:17:41,973 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:241 - user_details.setter: new value set {
+    "access_token": "jx2zql9fw2jx9s7tayik4ybfjrmuhb7m5csb1mtl",
+    "date_joined": "2022-10-06 19:57:56",
+    "email": "test@stepwisemath.ai",
     "expires_in": 3600,
-    "first_name": "Lawrence",
-    "fullname": "Lawrence McDaniel",
-    "id": 6,
+    "first_name": "Test",
+    "fullname": "Test McBugster",
+    "id": 7,
     "is_staff": true,
     "is_superuser": true,
-    "last_name": "McDaniel",
+    "last_name": "McBugster",
     "refresh_token": "",
     "scope": "",
     "token_type": "",
     "user_status": "0",
-    "username": "mcdaniel"
+    "username": "testaccount"
 }
-/openedx/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField User.date_joined received a naive datetime (2022-10-04 00:46:37) while time zone support is active.
+2022-10-06 20:17:41,973 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:290 - get_user_details() returning extended get_user_details() return dict: {
+    "access_token": "jx2zql9fw2jx9s7tayik4ybfjrmuhb7m5csb1mtl",
+    "date_joined": "2022-10-06 19:57:56",
+    "email": "test@stepwisemath.ai",
+    "expires_in": 3600,
+    "first_name": "Test",
+    "fullname": "Test McBugster",
+    "id": 7,
+    "is_staff": true,
+    "is_superuser": true,
+    "last_name": "McBugster",
+    "refresh_token": "",
+    "scope": "",
+    "token_type": "",
+    "user_status": "0",
+    "username": "testaccount"
+}
+[pid: 7|app: 0|req: 2/20] 192.168.4.4 () {70 vars in 2136 bytes} [Thu Oct  6 20:17:38 2022] GET /auth/complete/stepwisemath-oauth/?redirect_state=pdbIKIcEbhjVr3Kon5VXUWWiy5kuX921&code=q0antmap4qfamd6pe24jh75pdprahpdiyitmut0o&state=pdbIKIcEbhjVr3Kon5VXUWWiy5kuX921&iframe=break => generated 0 bytes in 3549 msecs (HTTP/1.1 302) 9 headers in 612 bytes (1 switches on core 0)
+2022-10-06 20:17:42,211 INFO 19 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/register", "context": {"user_id": null, "path": "/register", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://stepwisemath.ai/", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T20:17:42.211436+00:00", "event_type": "/register", "event_source": "server", "page": null}
+[pid: 19|app: 0|req: 3/21] 192.168.4.4 () {70 vars in 1796 bytes} [Thu Oct  6 20:17:42 2022] GET /register => generated 37606 bytes in 177 msecs (HTTP/1.1 200) 8 headers in 600 bytes (1 switches on core 0)
+2022-10-06 20:17:42,527 INFO 7 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/stepwise/api/v1/configuration/prod", "context": {"user_id": null, "path": "/stepwise/api/v1/configuration/prod", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T20:17:42.527217+00:00", "event_type": "/stepwise/api/v1/configuration/prod", "event_source": "server", "page": null}
+[pid: 7|app: 0|req: 3/22] 192.168.4.4 () {68 vars in 1755 bytes} [Thu Oct  6 20:17:42 2022] GET /stepwise/api/v1/configuration/prod => generated 167 bytes in 41 msecs (HTTP/1.1 200) 6 headers in 189 bytes (1 switches on core 0)
+2022-10-06 20:17:42,617 INFO 19 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/api/user/v2/account/registration/", "context": {"user_id": null, "path": "/api/user/v2/account/registration/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {\"next\": [\"/dashboard\"], \"email\": [\"test@stepwisemath.ai\"], \"name\": [\"Test McBugster\"], \"username\": [\"testaccount\"], \"password\": \"********\", \"level_of_education\": [\"\"], \"gender\": [\"\"], \"year_of_birth\": [\"\"], \"mailing_address\": [\"\"], \"goals\": [\"\"], \"social_auth_provider\": [\"Stepwise\"], \"terms_of_service\": [\"true\"]}}", "time": "2022-10-06T20:17:42.616767+00:00", "event_type": "/api/user/v2/account/registration/", "event_source": "server", "page": null}
+2022-10-06 20:17:42,620 INFO 7 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/api/user/v1/validation/registration", "context": {"user_id": null, "path": "/api/user/v1/validation/registration", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {\"name\": [\"Test McBugster\"], \"username\": [\"testaccount\"], \"password\": \"********\", \"email\": [\"test@stepwisemath.ai\"], \"terms_of_service\": [\"false\"]}}", "time": "2022-10-06T20:17:42.619453+00:00", "event_type": "/api/user/v1/validation/registration", "event_source": "server", "page": null}
+[pid: 7|app: 0|req: 4/23] 192.168.4.4 () {74 vars in 1928 bytes} [Thu Oct  6 20:17:42 2022] POST /api/user/v1/validation/registration => generated 205 bytes in 85 msecs (HTTP/1.1 200) 8 headers in 282 bytes (1 switches on core 0)
+2022-10-06 20:17:42,719 INFO 7 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/api/user/v1/validation/registration", "context": {"user_id": null, "path": "/api/user/v1/validation/registration", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {\"name\": [\"Test McBugster\"], \"username\": [\"testaccount\"], \"password\": \"********\", \"email\": [\"test@stepwisemath.ai\"], \"terms_of_service\": [\"false\"]}}", "time": "2022-10-06T20:17:42.719504+00:00", "event_type": "/api/user/v1/validation/registration", "event_source": "server", "page": null}
+[pid: 7|app: 0|req: 5/24] 192.168.4.4 () {74 vars in 1928 bytes} [Thu Oct  6 20:17:42 2022] POST /api/user/v1/validation/registration => generated 205 bytes in 102 msecs (HTTP/1.1 200) 8 headers in 282 bytes (1 switches on core 0)
+2022-10-06 20:17:42,816 INFO 7 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/api/user/v1/validation/registration", "context": {"user_id": null, "path": "/api/user/v1/validation/registration", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {\"name\": [\"Test McBugster\"], \"username\": [\"testaccount\"], \"password\": \"********\", \"email\": [\"test@stepwisemath.ai\"], \"terms_of_service\": [\"false\"]}}", "time": "2022-10-06T20:17:42.816042+00:00", "event_type": "/api/user/v1/validation/registration", "event_source": "server", "page": null}
+[pid: 7|app: 0|req: 6/25] 192.168.4.4 () {74 vars in 1928 bytes} [Thu Oct  6 20:17:42 2022] POST /api/user/v1/validation/registration => generated 205 bytes in 77 msecs (HTTP/1.1 200) 8 headers in 282 bytes (1 switches on core 0)
+2022-10-06 20:17:43,160 INFO 19 [audit] [user 53] [ip 192.168.6.26] models.py:2753 - Login success - user.id: 53
+2022-10-06 20:17:43,221 INFO 19 [tracking] [user 53] [ip 192.168.6.26] logger.py:41 - {"name": "edx.user.settings.changed", "context": {"user_id": null, "path": "/api/user/v2/account/registration/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": {"old": null, "new": "en", "truncated": [], "setting": "pref-lang", "user_id": 53, "table": "user_api_userpreference"}, "time": "2022-10-06T20:17:43.220899+00:00", "event_type": "edx.user.settings.changed", "event_source": "server", "page": null}
+2022-10-06 20:17:43,239 INFO 19 [tracking] [user 53] [ip 192.168.6.26] logger.py:41 - {"name": "edx.user.settings.changed", "context": {"user_id": null, "path": "/api/user/v2/account/registration/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": {"old": false, "new": true, "truncated": [], "setting": "is_active", "user_id": 53, "table": "auth_user"}, "time": "2022-10-06T20:17:43.238965+00:00", "event_type": "edx.user.settings.changed", "event_source": "server", "page": null}
+/openedx/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Registration.activation_timestamp received a naive datetime (2022-10-06 20:17:43.246811) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
-2022-10-06 17:10:57,067 INFO 19 [tracking] [user None] [ip 192.168.5.143] logger.py:41 - {"name": "edx.user.settings.changed", "context": {"user_id": null, "path": "/auth/complete/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "efc4e03a6eb4264dbbd70fd1bd30601f", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": {"old": "2022-10-04T00:46:37+00:00", "new": "2022-10-04 00:46:37", "truncated": [], "setting": "date_joined", "user_id": 52, "table": "auth_user"}, "time": "2022-10-06T17:10:57.066609+00:00", "event_type": "edx.user.settings.changed", "event_source": "server", "page": null}
-[pid: 19|app: 0|req: 2/31] 192.168.4.4 () {68 vars in 2113 bytes} [Thu Oct  6 17:10:53 2022] GET /auth/complete/stepwisemath-oauth/?redirect_state=V1oalDl6qdC8c8JiC7PLWhf1BMPNEXGo&code=51kd3gnf8xgofxpsaf6k1pxj60vjmoizvbwkbjhs&state=V1oalDl6qdC8c8JiC7PLWhf1BMPNEXGo&iframe=break => generated 0 bytes in 4017 msecs (HTTP/1.1 302) 14 headers in 3332 bytes (1 switches on core 0)
-2022-10-06 17:10:57,377 INFO 7 [tracking] [user None] [ip 192.168.5.143] logger.py:41 - {"name": "/auth/complete/stepwisemath-oauth/", "context": {"user_id": null, "path": "/auth/complete/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "efc4e03a6eb4264dbbd70fd1bd30601f", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T17:10:57.377280+00:00", "event_type": "/auth/complete/stepwisemath-oauth/", "event_source": "server", "page": null}
-2022-10-06 17:10:57,410 INFO 7 [audit] [user 52] [ip 192.168.5.143] models.py:2753 - Login success - user.id: 52
-[pid: 7|app: 0|req: 11/32] 192.168.4.4 () {68 vars in 3897 bytes} [Thu Oct  6 17:10:57 2022] GET /auth/complete/stepwisemath-oauth/? => generated 0 bytes in 83 msecs (HTTP/1.1 302) 11 headers in 936 bytes (1 switches on core 0)
-2022-10-06 17:10:57,586 INFO 19 [tracking] [user 52] [ip 192.168.5.143] logger.py:41 - {"name": "/", "context": {"user_id": 52, "path": "/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "mcdaniel", "session": "e2e372be44e88efa6f77e91e67584808", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T17:10:57.586104+00:00", "event_type": "/", "event_source": "server", "page": null}
-[pid: 19|app: 0|req: 3/33] 192.168.4.4 () {68 vars in 3830 bytes} [Thu Oct  6 17:10:57 2022] GET / => generated 0 bytes in 44 msecs (HTTP/1.1 302) 8 headers in 521 bytes (1 switches on core 0)
-2022-10-06 17:10:57,743 INFO 7 [tracking] [user 52] [ip 192.168.5.143] logger.py:41 - {"name": "/dashboard", "context": {"user_id": 52, "path": "/dashboard", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "mcdaniel", "session": "e2e372be44e88efa6f77e91e67584808", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T17:10:57.743242+00:00", "event_type": "/dashboard", "event_source": "server", "page": null}
-2022-10-06 17:10:57,795 WARNING 7 [openedx.core.djangoapps.catalog.utils] [user 52] [ip 192.168.5.143] utils.py:134 - Failed to get program UUIDs from the cache for site web.stepwisemath.ai.
-2022-10-06 17:10:58,019 INFO 7 [stepwise_plugin.locale.utils] [user 52] [ip 192.168.5.143] utils.py:52 - language_from_request() found an existing language preference of en for username mcdaniel
-2022-10-06 17:10:58,035 INFO 7 [stepwise_plugin.ecommerce.utils] [user 52] [ip 192.168.5.143] utils.py:256 - paywall_should_render() - Faculty user - never block!, returning False.
-[pid: 7|app: 0|req: 12/34] 192.168.4.4 () {68 vars in 3848 bytes} [Thu Oct  6 17:10:57 2022] GET /dashboard => generated 20103 bytes in 341 msecs (HTTP/1.1 200) 7 headers in 500 bytes (1 switches on core 0)
-[pid: 19|app: -1|req: -1/35] 192.168.4.4 () {66 vars in 3783 bytes} [Thu Oct  6 17:10:58 2022] GET /static/js/commerce/credit.e4a82bfe5f09.js => generated 1333 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 7|app: -1|req: -1/36] 192.168.4.4 () {66 vars in 3819 bytes} [Thu Oct  6 17:10:58 2022] GET /static/js/learner_dashboard/certificate_api.ea59bd620247.js => generated 620 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 124 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/37] 192.168.4.4 () {66 vars in 3771 bytes} [Thu Oct  6 17:10:58 2022] GET /static/js/dashboard.5735ee1af594.js => generated 15010 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 126 bytes (0 switches on core 0)
-[pid: 19|app: -1|req: -1/38] 192.168.4.4 () {66 vars in 3865 bytes} [Thu Oct  6 17:10:58 2022] GET /static/bundles/EntitlementUnenrollmentFactory.3fc6969ae987de0a2c38.c553da8371cd.js => generated 6737 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 7|app: -1|req: -1/39] 192.168.4.4 () {66 vars in 3843 bytes} [Thu Oct  6 17:10:58 2022] GET /static/bundles/UnenrollmentFactory.de1e113a497364d5393f.c1f49727ce7e.js => generated 4374 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 125 bytes (0 switches on core 0)
-[pid: 7|app: -1|req: -1/40] 192.168.4.4 () {66 vars in 3861 bytes} [Thu Oct  6 17:10:58 2022] GET /static/images/profiles/default_50.3455a6581573.png => generated 420 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 111 bytes (0 switches on core 0)
-2022-10-06 17:10:58,248 INFO 19 [tracking] [user 52] [ip 192.168.5.143] logger.py:41 - {"name": "/stepwise/api/v1/configuration/prod", "context": {"user_id": 52, "path": "/stepwise/api/v1/configuration/prod", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "mcdaniel", "session": "e2e372be44e88efa6f77e91e67584808", "ip": "192.168.5.143", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/dashboard", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T17:10:58.248121+00:00", "event_type": "/stepwise/api/v1/configuration/prod", "event_source": "server", "page": null}
-[pid: 19|app: 0|req: 4/41] 192.168.4.4 () {68 vars in 3833 bytes} [Thu Oct  6 17:10:58 2022] GET /stepwise/api/v1/configuration/prod => generated 167 bytes in 62 msecs (HTTP/1.1 200) 7 headers in 349 bytes (1 switches on core 0)
+2022-10-06 20:17:43,254 INFO 19 [common.djangoapps.student.models] [user 53] [ip 192.168.6.26] models.py:938 - User testaccount (test@stepwisemath.ai) account is successfully activated.
+2022-10-06 20:17:43,255 INFO 19 [openedx_events.tooling] [user 53] [ip 192.168.6.26] tooling.py:160 - Responses of the Open edX Event <org.openedx.learning.student.registration.completed.v1>: 
+[]
+2022-10-06 20:17:43,261 INFO 19 [audit] [user 53] [ip 192.168.6.26] register.py:295 - Login success on new account creation - testaccount
+[pid: 19|app: 0|req: 4/26] 192.168.4.4 () {74 vars in 1881 bytes} [Thu Oct  6 20:17:42 2022] POST /api/user/v2/account/registration/ => generated 79 bytes in 1145 msecs (HTTP/1.1 200) 15 headers in 3254 bytes (1 switches on core 0)
+2022-10-06 20:17:44,014 INFO 7 [tracking] [user 53] [ip 192.168.6.26] logger.py:41 - {"name": "/auth/complete/stepwisemath-oauth/", "context": {"user_id": 53, "path": "/auth/complete/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "testaccount", "session": "4b87c052d7ba72c52f84c82737834d90", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T20:17:44.014681+00:00", "event_type": "/auth/complete/stepwisemath-oauth/", "event_source": "server", "page": null}
+/openedx/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField User.date_joined received a naive datetime (2022-10-06 19:57:56) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+2022-10-06 20:17:44,100 INFO 7 [tracking] [user 53] [ip 192.168.6.26] logger.py:41 - {"name": "edx.user.settings.changed", "context": {"user_id": 53, "path": "/auth/complete/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "testaccount", "session": "4b87c052d7ba72c52f84c82737834d90", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": {"old": "2022-10-06T20:17:42.674048+00:00", "new": "2022-10-06 19:57:56", "truncated": [], "setting": "date_joined", "user_id": 53, "table": "auth_user"}, "time": "2022-10-06T20:17:44.100229+00:00", "event_type": "edx.user.settings.changed", "event_source": "server", "page": null}
+[pid: 7|app: 0|req: 7/27] 192.168.4.4 () {66 vars in 3727 bytes} [Thu Oct  6 20:17:43 2022] GET /auth/complete/stepwisemath-oauth/? => generated 0 bytes in 150 msecs (HTTP/1.1 302) 10 headers in 721 bytes (1 switches on core 0)
+2022-10-06 20:17:44,375 INFO 19 [tracking] [user 53] [ip 192.168.6.26] logger.py:41 - {"name": "/dashboard", "context": {"user_id": 53, "path": "/dashboard", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "testaccount", "session": "4b87c052d7ba72c52f84c82737834d90", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/register", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {}, \"POST\": {}}", "time": "2022-10-06T20:17:44.374973+00:00", "event_type": "/dashboard", "event_source": "server", "page": null}

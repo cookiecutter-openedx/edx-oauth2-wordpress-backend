@@ -1,5 +1,5 @@
+from .wp_oauth import WPOpenEdxOAuth2
 
-from .base_oauth import WPOpenEdxOAuth2
 
 class StepwiseMathWPOAuth2(WPOpenEdxOAuth2):
 

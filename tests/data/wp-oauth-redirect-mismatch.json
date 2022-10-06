@@ -1,0 +1,5 @@
+{
+    "error": "redirect_uri_mismatch",
+    "error_description": "The redirect URI provided is missing or does not match",
+    "error_uri": "http://tools.ietf.org/html/rfc6749#section-3.1.2"
+}
