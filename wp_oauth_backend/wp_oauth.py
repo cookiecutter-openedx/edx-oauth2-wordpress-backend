@@ -286,7 +286,8 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             # -------------------------------------------------------------
             if VERBOSE_LOGGING:
                 logger.info(
-                    "get_user_details() -  detected an extended get_user_details() dict in the response: {response}".format(
+                    "get_user_details() -  returning {t}: {response}".format(
+                        t=self.get_response_type(response),
                         response=json.dumps(response, sort_keys=True, indent=4)
                     )
                 )
@@ -297,9 +298,10 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         # conform to the structure of a wp-oauth dict.
         if not self.is_wp_oauth_response(response):
             logger.warning(
-                "get_user_details() -  response object of {t} is not a valid wp-oauth object. Cannot continue. {response}".format(
+                "get_user_details() -  response object of {t} is not a valid wp-oauth object: {response}. Cannot continue. returning: {retval}".format(
                     t=self.get_response_type(response),
                     response=json.dumps(response, sort_keys=True, indent=4),
+                    retval=self.user_details
                 )
             )
             return self.user_details
@@ -308,11 +310,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         # expected use case #1: response object is a dict with all required keys.
         # -------------------------------------------------------------
         if VERBOSE_LOGGING:
-            logger.info(
-                "get_user_details() -  start. response: {response}".format(
-                    response=json.dumps(response, sort_keys=True, indent=4)
-                )
-            )
+            logger.info("get_user_details() -  processing response object")
 
         # try to parse out the first and last names
         split_name = response.get("display_name", "").split()
