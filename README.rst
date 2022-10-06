@@ -88,5 +88,6 @@ in https://stepwisemath.ai/, configured as follows:
 
 
 .. include:: doc/lms.log
-   :log:
+   :text:
+
   
