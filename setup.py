@@ -11,9 +11,11 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
+
 def load_readme():
     with io.open(os.path.join(HERE, "README.rst"), "rt", encoding="utf8") as f:
         return f.read()
+
 
 def load_about():
     about = {}
@@ -25,6 +27,7 @@ def load_about():
         exec(f.read(), about)  # pylint: disable=exec-used
     return about
 
+
 def load_requirements(*requirements_paths):
     """
     Load all requirements from the specified requirements files.
@@ -34,7 +37,9 @@ def load_requirements(*requirements_paths):
     requirements = set()
     for path in requirements_paths:
         requirements.update(
-            line.split("#")[0].strip() for line in open(path).readlines() if is_requirement(line.strip())
+            line.split("#")[0].strip()
+            for line in open(path).readlines()
+            if is_requirement(line.strip())
         )
     return list(requirements)
 
@@ -54,19 +59,22 @@ def is_requirement(line):
         or line.startswith("git+")
     )
 
+
 README = load_readme()
 ABOUT = load_about()
 VERSION = ABOUT["__version__"]
 
 setup(
-    name='wp-oauth-backend',
+    name="wp-oauth-backend",
     version=VERSION,
-    description=('An OAuth backend for the WP OAuth Wordpress Plugin, '
-                 'that is customized for use in Open edX installations.'),
+    description=(
+        "An OAuth backend for the WP OAuth Wordpress Plugin, "
+        "that is customized for use in Open edX installations."
+    ),
     long_description=README,
-    author='Lawrence McDaniel, lpm0073@gmail.com',
-    author_email='lpm0073@gmail.com',
-    url='https://github.com/StepwiseMath/wp-oauth-backend',
+    author="Lawrence McDaniel, lpm0073@gmail.com",
+    author_email="lpm0073@gmail.com",
+    url="https://github.com/StepwiseMath/wp-oauth-backend",
     project_urls={
         "Code": "https://github.com/StepwiseMath/wp-oauth-backend",
         "Issue tracker": "https://github.com/StepwiseMath/wp-oauth-backend/issues",
@@ -76,11 +84,11 @@ setup(
     include_package_data=True,
     package_data={"": ["*.html"]},  # include any templates found in this repo.
     zip_safe=False,
-    keywords='WP OAuth',
+    keywords="WP OAuth",
     python_requires=">=3.7",
     install_requires=load_requirements("requirements/stable-psa.txt"),
     classifiers=[
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
     ],
 )
