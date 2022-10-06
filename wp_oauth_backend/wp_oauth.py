@@ -101,15 +101,26 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
 
     # private utility function. not part of psa.
     def _urlopen(self, url):
+        """
+        ensure that url response object is utf-8 encoded.
+        """
         return urlopen(url).read().decode("utf-8")
 
     def is_valid_user_details(self, response) -> bool:
+        """
+        validate that the object passed is a dict containing at least the keys 
+        in qc_keys.
+        """
         if not type(response) == dict: return False
         qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
         if all(key in response for key in qc_keys): return True
         return False
 
     def is_wp_oauth_response(self, response) -> bool:
+        """
+        validate the structure of the response object from wp-oauth. it's 
+        supposed to be a dict with at least the keys included in qc_keys.
+        """
         if not type(response) == dict: return False
         qc_keys = ['ID' 'display_name', 'user_email', 'user_login', 'user_roles']
         if all(key in response for key in qc_keys): return True
