@@ -211,24 +211,24 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # so that we can include logging for diagnostic purposes.
     @property
     def AUTHORIZATION_URL(self) -> str:
-        retval = f"{self.BASE_URL}/oauth/authorize"
+        url = f"{self.BASE_URL}/oauth/authorize"
         if VERBOSE_LOGGING:
-            logger.info("AUTHORIZATION_URL: {url}".format(url=retval))
-        return retval
+            logger.info("AUTHORIZATION_URL: {url}".format(url=url))
+        return url
 
     @property
     def ACCESS_TOKEN_URL(self) -> str:
-        retval = f"{self.BASE_URL}/oauth/token"
+        url = f"{self.BASE_URL}/oauth/token"
         if VERBOSE_LOGGING:
-            logger.info("ACCESS_TOKEN_URL: {url}".format(url=retval))
-        return retval
+            logger.info("ACCESS_TOKEN_URL: {url}".format(url=url))
+        return url
 
     @property
     def USER_QUERY(self) -> str:
-        retval = f"{self.BASE_URL}/oauth/me"
+        url = f"{self.BASE_URL}/oauth/me"
         if VERBOSE_LOGGING:
-            logger.info("USER_QUERY: {url}".format(url=retval))
-        return retval
+            logger.info("USER_QUERY: {url}".format(url=url))
+        return url
 
     @property
     def user_details(self) -> dict:
@@ -256,9 +256,10 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     def get_user_details(self, response) -> dict:
         if not self.is_valid_get_user_details_response(response):
             logger.error(
-                "get_user_details() -  received an invalid response object of {t}. Cannot continue: {response}".format(
+                "get_user_details() -  received an invalid response object of {t}:{response} Cannot continue. Returning: {retval}".format(
                     t=self.get_response_type(response),
                     response=json.dumps(response, sort_keys=True, indent=4),
+                    retval=json.dumps(self.user_details, sort_keys=True, indent=4),
                 )
             )
             # if we have cached results then we might be able to recover.
@@ -301,7 +302,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
                 "get_user_details() -  response object of {t} is not a valid wp-oauth object: {response}. Cannot continue. returning: {retval}".format(
                     t=self.get_response_type(response),
                     response=json.dumps(response, sort_keys=True, indent=4),
-                    retval=self.user_details,
+                    retval=json.dumps(self.user_details, sort_keys=True, indent=4),
                 )
             )
             return self.user_details
