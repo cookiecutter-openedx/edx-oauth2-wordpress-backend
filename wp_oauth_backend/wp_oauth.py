@@ -118,9 +118,6 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             return False
         qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
         if all(key in response for key in qc_keys): return True
-        logger.warning('is_valid_user_details() received an invalid response: {response}'.format(
-            response=json.dumps(response, sort_keys=True, indent=4)
-        ))
         return False
 
     def is_wp_oauth_response(self, response) -> bool:
@@ -135,9 +132,6 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             return False
         qc_keys = ['ID' 'display_name', 'user_email', 'user_login', 'user_roles']
         if all(key in response for key in qc_keys): return True
-        logger.warning('is_wp_oauth_response() received an invalid response: {response}'.format(
-            response=json.dumps(response, sort_keys=True, indent=4)
-        ))
         return False
 
     def is_wp_oauth_extended_response(self, response) -> bool:
@@ -149,6 +143,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         qc_keys = ['access_token' 'expires_in', 'refresh_token', 'scope', 'token_type']
         if all(key in response for key in qc_keys): return True
         return False
+        
     # override Python Social Auth default end points.
     # see https://wp-oauth.com/docs/general/endpoints/
     #
