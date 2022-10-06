@@ -129,6 +129,14 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             logger.info('USER_QUERY: {url}'.format(url=retval))
         return retval
 
+    @property
+    def user_details(self) -> dict:
+        return self._user_details
+
+    @user_details.setter
+    def user_details(self, value: dict):
+        self._user_details = value
+
     # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     # Return user details from the Wordpress user account
     def get_user_details(self, response) -> dict:
@@ -173,11 +181,11 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
                     response=json.dumps(response, sort_keys=True, indent=4)
                     ))
 
-        if tainted and self._user_details:
+        if tainted and self.user_details:
             logger.warning('get_user_details() -  returning cached results. user_details: {user_details}'.format(
-                user_details=json.dumps(self._user_details, sort_keys=True, indent=4)
+                user_details=json.dumps(self.user_details, sort_keys=True, indent=4)
             ))
-            return self._user_details
+            return self.user_details
 
         if tainted:
             logger.error('response object is missing or misformed, and no cached results were found. Cannot get user details from oauth provider.')
@@ -197,7 +205,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         super_user = 'administrator' in user_roles
         is_staff = 'administrator' in user_roles
 
-        self._user_details = {
+        self.user_details = {
             'id': int(response.get('ID'), 0),
             'username': response.get('user_login', ''),
             'email': response.get('user_email', ''),
@@ -214,9 +222,9 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         }
         if VERBOSE_LOGGING:
             logger.info('get_user_details() -  finish. user_details: {user_details}'.format(
-                user_details=json.dumps(self._user_details, sort_keys=True, indent=4)
+                user_details=json.dumps(self.user_details, sort_keys=True, indent=4)
                 ))
-        return self._user_details
+        return self.user_details
 
     # Load user data from service url end point. Note that in the case of 
     # wp oauth, the response object returned by self.USER_QUERY
