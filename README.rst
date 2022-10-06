@@ -1,5 +1,5 @@
-Wordpress OAuth2 Backend Open edX / 
-===================================
+Wordpress OAuth2 Backend for Open edX
+=====================================
 
 Overview
 --------
@@ -9,9 +9,10 @@ A Python Social Auth backend for `WP OAuth <https://wp-oauth.com/>`_ this is cus
 - `Python Social Auth custom backend implentation <https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html>`_
 - `WP Oauth Wordpress Plugin Documentation <https://wp-oauth.com/docs/>`_
 
+This is a strongly-typed implementation that leverages an in-depth knowledge of the WP Oauth return objects
+to generate verbose, informative log data in `lms.log <./doc/lms.log>`_ that will help you to quickly get third party authentication
+working on your Open edX installation.  
 
-
-`lms.log <./doc/lms.log>`_
 
 Usage
 -----
