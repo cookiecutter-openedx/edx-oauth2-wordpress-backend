@@ -1,7 +1,7 @@
 import json
 
 # Opening JSON file
-f = open("get_user_details_extended.json")
+f = open("./data/get_user_details_extended.json")
 
 # returns JSON object as
 # a dictionary
