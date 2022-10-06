@@ -18,7 +18,7 @@ Usage
 
 ..  code-block:: python
 
-  from .wp_oauth import WPOpenEdxOAuth2
+  from wp_oauth_backend.wp_oauth import WPOpenEdxOAuth2
 
 
   class StepwiseMathWPOAuth2(WPOpenEdxOAuth2):
@@ -40,11 +40,11 @@ Usage
 Open edX Setup
 --------------
 
-.. image:: doc/django-admin-1
+.. image:: doc/django-admin-1.png
   :width: 100%
   :alt: Open edX Django Admin Add Provider Configuration (OAuth)
 
-.. image:: doc/django-admin-2
+.. image:: doc/django-admin-2.png
   :width: 100%
   :alt: Open edX Django Admin Add Provider Configuration (OAuth)
 
