@@ -240,7 +240,6 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     #
     # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     def user_data(self, access_token, *args, **kwargs) -> dict:
-        user_details = None
 
         url = f'{self.USER_QUERY}?' + urlencode({
             'access_token': access_token
@@ -251,14 +250,14 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
 
         try:
             response = json.loads(self._urlopen(url))
-            user_details = self.get_user_details(response)
+            self.get_user_details(response)
         except ValueError as e:
             logger.error('user_data() {err}'.format(err=e))
             return None
 
-        if not user_details or type(user_details) != dict or 'username' not in user_details.keys():
+        if not self.user_details or type(self.user_details) != dict or 'username' not in self.user_details.keys():
             # we should never find ourselves here.
-            return user_details
+            return self.user_details
 
         # add syncronization of any data fields that get missed by the built-in
         # open edx third party authentication sync functionality.
@@ -266,20 +265,20 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             # this gets called just prior to account creation for
             # new users, hence, we need to catch DoesNotExist
             # exceptions.
-            user=User.objects.get(username=user_details['username'])
+            user=User.objects.get(username=self.user_details['username'])
         except User.DoesNotExist:
-            return user_details
+            return self.user_details
 
-        if (user.is_superuser != user_details['is_superuser']) or (user.is_staff != user_details['is_staff']):
-            user.is_superuser = user_details['is_superuser']
-            user.is_staff = user_details['is_staff']
+        if (user.is_superuser != self.user_details['is_superuser']) or (user.is_staff != self.user_details['is_staff']):
+            user.is_superuser = self.user_details['is_superuser']
+            user.is_staff = self.user_details['is_staff']
             user.save()
             logger.info('Updated the is_superuser/is_staff flags for user {username}'.format(username=user.username))
 
-        if (user.first_name != user_details['first_name']) or (user.last_name != user_details['last_name']):
-            user.first_name = user_details['first_name']
-            user.last_name = user_details['last_name']
+        if (user.first_name != self.user_details['first_name']) or (user.last_name != self.user_details['last_name']):
+            user.first_name = self.user_details['first_name']
+            user.last_name = self.user_details['last_name']
             user.save()
             logger.info('Updated first_name/last_name for user {username}'.format(username=user.username))
 
-        return user_details
+        return self.user_details
