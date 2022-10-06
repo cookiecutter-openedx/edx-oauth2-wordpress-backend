@@ -111,8 +111,9 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
 
     def is_valid_user_details(self, response) -> bool:
         """
-        validate that the object passed is a dict containing at least the keys
-        in qc_keys.
+        validate that the object passed is a json dict containing at least
+        the keys in qc_keys. These are the dict keys created in get_user_details()
+        default return object.
         """
         if not type(response) == dict:
             logger.warning(
@@ -188,7 +189,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         """
         if not self.is_valid_user_details(response):
             return False
-        qc_keys = ["access_token" "expires_in", "refresh_token", "scope", "token_type"]
+        qc_keys = ["access_token", "expires_in", "refresh_token", "scope", "token_type"]
         if all(key in response for key in qc_keys):
             return True
         return False
@@ -205,7 +206,17 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             return True
         return False
 
-    def get_response_type(self, response):
+    def is_valid_get_user_details_response(self, response) -> bool:
+        """
+        True if the response object can be processed by get_user_details()
+        """
+        if self.is_valid_user_details(response):
+            return True
+        if self.is_wp_oauth_response(response):
+            return True
+        return False
+
+    def get_response_type(self, response) -> str:
         if type(response) != dict:
             return "unknown response of type {t}".format(t=type(response))
         if self.is_wp_oauth_error(response):
@@ -270,11 +281,9 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
     # see https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html
     # Return user details from the Wordpress user account
     def get_user_details(self, response) -> dict:
-        if not (
-            self.is_valid_user_details(response) or self.is_wp_oauth_response(response)
-        ):
+        if not self.is_valid_get_user_details_response(response):
             logger.error(
-                "get_user_details() -  received an unrecognized response of {t}. Cannot continue: {response}".format(
+                "get_user_details() -  received an invalid response object of {t}. Cannot continue: {response}".format(
                     t=self.get_response_type(response),
                     response=json.dumps(response, sort_keys=True, indent=4),
                 )
@@ -284,7 +293,8 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
 
         if VERBOSE_LOGGING:
             logger.info(
-                "get_user_details() begin with response: {response}".format(
+                "get_user_details() received {t}: {response}".format(
+                    t=self.get_response_type(response),
                     response=json.dumps(response, sort_keys=True, indent=4)
                 )
             )
@@ -303,7 +313,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             # -------------------------------------------------------------
             if VERBOSE_LOGGING:
                 logger.info(
-                    "get_user_details() -  detected an enhanced get_user_details() dict in the response: {response}".format(
+                    "get_user_details() -  detected an extended get_user_details() dict in the response: {response}".format(
                         response=json.dumps(response, sort_keys=True, indent=4)
                     )
                 )
@@ -388,20 +398,6 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
 
             user_details = self.get_user_details(response)
 
-            if VERBOSE_LOGGING:
-                logger.info(
-                    "user_data() local variable user_details: {user_details}".format(
-                        user_details=json.dumps(user_details, sort_keys=True, indent=4)
-                    )
-                )
-            if VERBOSE_LOGGING:
-                logger.info(
-                    "user_data() class property value of self.user_details: {user_details}".format(
-                        user_details=json.dumps(
-                            self.user_details, sort_keys=True, indent=4
-                        )
-                    )
-                )
         except ValueError as e:
             logger.error("user_data() {err}".format(err=e))
             return None
