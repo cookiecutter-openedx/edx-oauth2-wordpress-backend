@@ -17,7 +17,7 @@ working on your Open edX installation.
 Usage
 -----
 
-An example implementation for an Open edX installation named https://web.stepwisemath.ai
+An example implementation for an Open edX installation named https://stepwisemath.ai/
 
 1. add this package to your project's requiremets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -127,7 +127,7 @@ WP Oauth Plugin Configuration
 -----------------------------
 
 This plugin enables your Open edX installation to authenticate against the WP Oauth plugin provider
-in https://stepwisemath.ai/, configured as follows:
+in your Wordpress web site, configured as follows:
 
 .. image:: doc/wp-oauth-config.png
   :width: 100%
