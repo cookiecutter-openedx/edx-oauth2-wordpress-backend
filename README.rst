@@ -1,5 +1,5 @@
-OAuth2 Backend for WP Oauth
-===========================
+Wordpress OAuth2 Backend Open edX / 
+===================================
 
 Overview
 --------
