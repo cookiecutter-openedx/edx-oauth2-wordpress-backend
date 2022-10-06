@@ -288,7 +288,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
                 logger.info(
                     "get_user_details() -  returning {t}: {response}".format(
                         t=self.get_response_type(response),
-                        response=json.dumps(response, sort_keys=True, indent=4)
+                        response=json.dumps(response, sort_keys=True, indent=4),
                     )
                 )
             return response
@@ -301,7 +301,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
                 "get_user_details() -  response object of {t} is not a valid wp-oauth object: {response}. Cannot continue. returning: {retval}".format(
                     t=self.get_response_type(response),
                     response=json.dumps(response, sort_keys=True, indent=4),
-                    retval=self.user_details
+                    retval=self.user_details,
                 )
             )
             return self.user_details
