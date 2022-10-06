@@ -9,8 +9,45 @@ A Python Social Auth backend for `WP OAuth <https://wp-oauth.com/>`_ this is cus
 - `Python Social Auth custom backend implentation <https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html>`_
 - `WP Oauth Wordpress Plugin Documentation <https://wp-oauth.com/docs/>`_
 
+
+
+`lms.log <./doc/lms.log>`_
+
+Usage
+-----
+
+..  code-block:: python
+
+  from .wp_oauth import WPOpenEdxOAuth2
+
+
+  class StepwiseMathWPOAuth2(WPOpenEdxOAuth2):
+
+      # This defines the backend name and identifies it during the auth process.
+      # The name is used in the URLs /login/<backend name> and /complete/<backend name>.
+      #
+      # This is the string value that will appear in the LMS Django Admin
+      # Third Party Authentication / Provider Configuration (OAuth)
+      # setup page drop-down box titled, "Backend name:", just above
+      # the "Client ID:" and "Client Secret:" fields.
+      name = "swtest-oauth"
+
+      # note: no slash at the end of the base url. Python Social Auth
+      # might clean this up for you, but i'm not 100% certain of that.
+      BASE_URL = "https://stepwisemath.ai"
+
+
 Open edX Setup
 --------------
+
+.. image:: doc/django-admin-1
+  :width: 100%
+  :alt: Open edX Django Admin Add Provider Configuration (OAuth)
+
+.. image:: doc/django-admin-2
+  :width: 100%
+  :alt: Open edX Django Admin Add Provider Configuration (OAuth)
+
 
 General Python/Django
 ~~~~~~~~~~~~~~~~~~~~~
@@ -86,7 +123,3 @@ in https://stepwisemath.ai/, configured as follows:
   :width: 100%
   :alt: WP Oauth configuration page
 
-Sample lms log output
----------------------
-
-`lms.log <./doc/lms.log>`_
