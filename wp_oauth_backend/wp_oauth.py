@@ -109,19 +109,22 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         """
         return urlopen(url).read().decode("utf-8")
 
+    def is_valid_dict(self, response, qc_keys) -> bool:
+        if not type(response) == dict:
+            logger.warning(
+                "is_valid_dict() was expecting a dict but received an object of type: {type}".format(
+                    type=type(response)
+                )
+            )
+            return False
+        return all(key in response for key in qc_keys)
+
     def is_valid_user_details(self, response) -> bool:
         """
         validate that the object passed is a json dict containing at least
         the keys in qc_keys. These are the dict keys created in get_user_details()
         default return object.
         """
-        if not type(response) == dict:
-            logger.warning(
-                "is_valid_user_details() was expecting a dict but received an object of type: {type}".format(
-                    type=type(response)
-                )
-            )
-            return False
         qc_keys = [
             "id",
             "date_joined",
@@ -133,41 +136,21 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             "last_name",
             "username",
         ]
-        if all(key in response for key in qc_keys):
-            return True
-        return False
+        return self.is_valid_dict(response, qc_keys)
 
     def is_wp_oauth_error(self, response) -> bool:
         """
         validate the structure of the response object conforms to a
         wp-oauth error json dict.
         """
-        if not type(response) == dict:
-            logger.warning(
-                "is_wp_oauth_error() was expecting a dict but received an object of type: {type}".format(
-                    type=type(response)
-                )
-            )
-            return False
-        if len(response.keys()) != 2:
-            return False
         qc_keys = ["error" "error_description"]
-        if all(key in response for key in qc_keys):
-            return True
-        return False
+        return self.is_valid_dict(response, qc_keys) and len(response.keys()) == 2
 
     def is_wp_oauth_response(self, response) -> bool:
         """
         validate the structure of the response object from wp-oauth. it's
         supposed to be a dict with at least the keys included in qc_keys.
         """
-        if not type(response) == dict:
-            logger.warning(
-                "is_wp_oauth_response() was expecting a dict but received an object of type: {type}".format(
-                    type=type(response)
-                )
-            )
-            return False
         qc_keys = [
             "ID",
             "capabilities",
@@ -178,21 +161,15 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             "user_registered",
             "user_status",
         ]
-        if all(key in response for key in qc_keys):
-            return True
-        return False
+        return self.is_valid_dict(response, qc_keys)
 
     def is_wp_oauth_refresh_token_response(self, response) -> bool:
         """
         validate that the structure of the response contains the keys of
         a refresh token dict.
         """
-        if not self.is_valid_user_details(response):
-            return False
         qc_keys = ["access_token", "expires_in", "refresh_token", "scope", "token_type"]
-        if all(key in response for key in qc_keys):
-            return True
-        return False
+        return self.is_valid_dict(response, qc_keys)
 
     def is_get_user_details_extended_dict(self, response) -> bool:
         """
@@ -200,21 +177,17 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
         contains a.) all keys of a get_user_details() return, plus,
         b.) all keys of a wp-oauth refresh token response.
         """
-        if not self.is_valid_user_details(response):
-            return False
-        if self.is_wp_oauth_refresh_token_response(response):
-            return True
-        return False
+        return self.is_valid_user_details(
+            response
+        ) and self.is_wp_oauth_refresh_token_response(response)
 
     def is_valid_get_user_details_response(self, response) -> bool:
         """
         True if the response object can be processed by get_user_details()
         """
-        if self.is_valid_user_details(response):
-            return True
-        if self.is_wp_oauth_response(response):
-            return True
-        return False
+        return self.is_valid_user_details(response) or self.is_wp_oauth_response(
+            response
+        )
 
     def get_response_type(self, response) -> str:
         if type(response) != dict:
@@ -295,7 +268,7 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             logger.info(
                 "get_user_details() received {t}: {response}".format(
                     t=self.get_response_type(response),
-                    response=json.dumps(response, sort_keys=True, indent=4)
+                    response=json.dumps(response, sort_keys=True, indent=4),
                 )
             )
         # a def in the third_party_auth pipeline list calls get_user_details() after its already

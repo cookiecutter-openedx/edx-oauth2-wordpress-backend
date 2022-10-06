@@ -1,11 +1,12 @@
 import json
-  
+
 # Opening JSON file
-f = open('get_user_details_extended.json')
-  
-# returns JSON object as 
+f = open("get_user_details_extended.json")
+
+# returns JSON object as
 # a dictionary
 response = json.load(f)
+
 
 def is_valid_user_details(response) -> bool:
     """
@@ -27,6 +28,7 @@ def is_valid_user_details(response) -> bool:
         return True
     return False
 
+
 def is_wp_oauth_refresh_token_response(response) -> bool:
     """
     validate that the structure of the response contains the keys of
@@ -39,10 +41,9 @@ def is_wp_oauth_refresh_token_response(response) -> bool:
         return True
     return False
 
-print('is_valid_user_details')
+
+print("is_valid_user_details")
 print(is_valid_user_details(response))
 
-print('is_wp_oauth_refresh_token_response')
+print("is_wp_oauth_refresh_token_response")
 print(is_wp_oauth_refresh_token_response(response))
-
-
