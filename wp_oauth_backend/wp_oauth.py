@@ -162,6 +162,9 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             # then we can assume that this is our case.
             qc_keys = ['id', 'date_joined', 'email', 'first_name', 'fullname', 'is_staff', 'is_superuser', 'last_name', 'username']
             if all(key in response for key in qc_keys):
+                # -------------------------------------------------------------
+                # expected use case #2: a potentially enhanced version of an original user_details dict.
+                # -------------------------------------------------------------
                 if VERBOSE_LOGGING:
                     logger.info('get_user_details() -  detected an enhanced get_user_details() dict in the response: {response}'.format(
                         response=json.dumps(response, sort_keys=True, indent=4)
@@ -171,12 +174,16 @@ class StepwiseMathWPOAuth2(BaseOAuth2):
             # otherwise we pobably received the default response from the oauth provider based on 
             # the scopes 'basic' 'email' 'profile'. We'll check a few of the most important keys to see
             # if they exist.
-            if ('ID' not in response.keys()) or ('user_email' not in response.keys()) or ('user_login' not in response.keys()):
+            qc_keys = ['ID', 'user_email', 'user_login']
+            if not all(key in response for key in qc_keys):
                 logger.warning('get_user_details() -  response object is missing one or more required keys: {response}'.format(
                     response=json.dumps(response, sort_keys=True, indent=4)
                 ))
                 tainted = True
             else:
+                # -------------------------------------------------------------
+                # expected use case #1: response object is a dict with all required keys.
+                # -------------------------------------------------------------
                 if VERBOSE_LOGGING:
                     logger.info('get_user_details() -  start. response: {response}'.format(
                         response=json.dumps(response, sort_keys=True, indent=4)
