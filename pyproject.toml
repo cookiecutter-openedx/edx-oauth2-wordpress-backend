@@ -1,3 +1,22 @@
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta:__legacy__"
+
+[project]
+name = "wp-oauth-backend_lpm0073"
+version = "1.0.0"
+authors = [
+  { name="Lawrence McDaniel", email="lpm0073@gmail.com" },
+]
+description = "A WP Oauth Python Social Auth backend for Open edX"
+readme = "README.rst"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/lpm0073/wp-oauth-backend"
+"Bug Tracker" = "https://github.com/lpm0073/wp-oauth-backend/issues"
