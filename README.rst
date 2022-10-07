@@ -8,7 +8,7 @@ Wordpress OAuth2 Backend for Open edX
   :alt: Forums
   :target: https://discuss.openedx.org/
 
-.. image:: https://img.shields.io/static/v1?logo=discourse&label=Forums&style=flat-square&color=1054ff&message=wp-oauth
+.. image:: https://img.shields.io/static/v1?logo=discourse&label=WP-Oauth&style=flat-square&color=1054ff&message=home-page
   :alt: WP Oauth
   :target: https://wp-oauth.com/
 
