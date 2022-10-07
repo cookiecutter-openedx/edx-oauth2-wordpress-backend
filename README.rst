@@ -4,8 +4,8 @@ Wordpress OAuth2 Backend for Open edX
   :target: https://lawrencemcdaniel.com
   :alt: Hack.d Lawrence McDaniel
 
-.. image:: https://img.shields.io/static/v1?logo=discourse&label=Forums&style=flat-square&color=ff0080&message=discuss.openedx.org
-  :alt: Forums
+.. image:: https://img.shields.io/static/v1?logo=discourse&label=Discussions&style=flat-square&color=ff0080&message=OpenEdx
+  :alt: Open edX Discussions
   :target: https://discuss.openedx.org/
 
 .. image:: https://img.shields.io/static/v1?logo=discourse&label=WP-Oauth&style=flat-square&color=1054ff&message=Server
