@@ -1,5 +1,15 @@
 Wordpress OAuth2 Backend for Open edX
 =====================================
+.. image:: https://img.shields.io/badge/hack.d-Lawrence%20McDaniel-orange.svg
+  :target: https://lawrencemcdaniel.com
+  :alt: Hack.d Lawrence McDaniel
+
+.. image:: https://img.shields.io/static/v1?logo=discourse&label=Forums&style=flat-square&color=ff0080&message=discuss.overhang.io
+  :alt: Forums
+  :target: https://discuss.openedx.org/
+
+|
+
 
 Overview
 --------
@@ -11,7 +21,7 @@ A Python Social Auth backend for `WP OAuth <https://wp-oauth.com/>`_ this is cus
 
 This is a strongly-typed implementation that leverages an in-depth knowledge of the WP Oauth return objects
 to generate verbose, informative log data in `lms.log <./doc/lms.log>`_ that will help you to quickly get third party authentication
-working on your Open edX installation.  
+working on your Open edX installation.
 
 
 Usage
@@ -87,7 +97,7 @@ add these settings to django.conf:
   * - REDIRECT_URI
     - https://web.stepwisemath.ai/auth/complete/stepwisemath-oauth
 
-4. Configure a new Oauth2 client from the lms Django Admin console 
+4. Configure a new Oauth2 client from the lms Django Admin console
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. image:: doc/django-admin-1.png
@@ -270,7 +280,7 @@ Sample lms log output
     /openedx/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Registration.activation_timestamp received a naive datetime (2022-10-06 20:17:43.246811) while time zone support is active.
       warnings.warn("DateTimeField %s received a naive datetime (%s)"
     2022-10-06 20:17:43,254 INFO 19 [common.djangoapps.student.models] [user 53] [ip 192.168.6.26] models.py:938 - User testaccount (test@stepwisemath.ai) account is successfully activated.
-    2022-10-06 20:17:43,255 INFO 19 [openedx_events.tooling] [user 53] [ip 192.168.6.26] tooling.py:160 - Responses of the Open edX Event <org.openedx.learning.student.registration.completed.v1>: 
+    2022-10-06 20:17:43,255 INFO 19 [openedx_events.tooling] [user 53] [ip 192.168.6.26] tooling.py:160 - Responses of the Open edX Event <org.openedx.learning.student.registration.completed.v1>:
     []
     2022-10-06 20:17:43,261 INFO 19 [audit] [user 53] [ip 192.168.6.26] register.py:295 - Login success on new account creation - testaccount
     [pid: 19|app: 0|req: 4/26] 192.168.4.4 () {74 vars in 1881 bytes} [Thu Oct  6 20:17:42 2022] POST /api/user/v2/account/registration/ => generated 79 bytes in 1145 msecs (HTTP/1.1 200) 15 headers in 3254 bytes (1 switches on core 0)
