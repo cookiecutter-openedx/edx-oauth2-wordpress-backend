@@ -147,6 +147,26 @@ in your Wordpress web site, configured as follows:
   :width: 100%
   :alt: WP Oauth configuration page
 
+Usage in Cookiecutter
+---------------------
+
+add a snippet of this form to openedx_devops/.github/workflows/build-openedx.yml
+
+..  code-block:: yaml
+
+    steps:
+      #------------------------------------------------------------------------
+      # ... add your initialization and any preceding steps ...
+      #------------------------------------------------------------------------
+
+      - name: Add the wp-oauth-backend
+        uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
+        with:
+          repository: wp-oauth-backend
+          repository-organization: lpm0073
+          repository-ref: v1.0.0
+
+
 Sample lms log output
 ---------------------
 
