@@ -20,7 +20,7 @@ def load_readme():
 def load_about():
     about = {}
     with io.open(
-        os.path.join(HERE, "wp_oauth_backend", "__about__.py"),
+        os.path.join(HERE, "oauth2_wordpress", "__about__.py"),
         "rt",
         encoding="utf-8",
     ) as f:
