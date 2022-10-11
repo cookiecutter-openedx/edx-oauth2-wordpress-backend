@@ -16,7 +16,7 @@ python -m pip install --upgrade build
 
 sudo rm -r build
 sudo rm -r dist
-sudo rm -r oauth2_wordpress.egg-info
+sudo rm -r edx_oauth2_wordpress_backend.egg-info
 
 python3 -m build --sdist ./
 python3 -m build --wheel ./

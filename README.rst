@@ -114,7 +114,7 @@ add these settings to django.conf:
 
 
 5. Optional: Configure your devops
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cookiecutter openedx_devops build
 
