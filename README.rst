@@ -164,7 +164,7 @@ add a snippet of this form to openedx_devops/.github/workflows/build-openedx.yml
         with:
           repository: wp-oauth-backend
           repository-organization: lpm0073
-          repository-ref: v1.0.1
+          repository-ref: v1.0.2
 
 
 Sample lms log output

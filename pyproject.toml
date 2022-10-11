@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
 name = "wp-oauth-backend_lpm0073"
-version = "1.0.1"
+version = "1.0.2"
 authors = [
   { name="Lawrence McDaniel", email="lpm0073@gmail.com" },
 ]
