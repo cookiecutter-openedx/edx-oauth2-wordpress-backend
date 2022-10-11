@@ -40,9 +40,7 @@ include this repo in your project's requiremets.txt, or install it from the comm
 
 ..  code-block:: shell
 
-  cd path/to/your/virtual/environment
-  source path/to/venv/bin/activate
-  pip install https://github.com/lpm0073/edx-oauth2-wordpress-backend
+  pip install edx-oauth2-wordpress-backend
 
 2. subclass WPOpenEdxOAuth2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

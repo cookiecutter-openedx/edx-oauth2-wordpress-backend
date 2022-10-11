@@ -20,7 +20,7 @@ dependencies = [
   "social-auth-core==4.2.0",
   "social-auth-app-django==5.0.0"
 ]
-keywords = ["Wordpress", "OAuth", "Open edX"]
+keywords = ["Open edX", "oauth", "Wordpress"]
 
 [project.urls]
 "Homepage" = "https://github.com/lpm0073/edx-oauth2-wordpress-backend"

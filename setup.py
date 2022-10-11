@@ -84,7 +84,7 @@ setup(
     include_package_data=True,
     package_data={"": ["*.html"]},  # include any templates found in this repo.
     zip_safe=False,
-    keywords="Wordpress, oauth, Open edX",
+    keywords="Open edX, oauth, Wordpress",
     python_requires=">=3.7",
     install_requires=load_requirements("requirements/stable-psa.txt"),
     classifiers=[
