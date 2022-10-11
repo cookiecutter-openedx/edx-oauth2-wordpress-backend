@@ -18,7 +18,7 @@ Open edX OAuth2 Backend for Wordpress
 Overview
 --------
 
-A Python Social Auth backend for `WP OAuth <https://wp-oauth.com/>`_ this is customized for use with Open edX.
+An Open edX oauth2 backend for `Wordpress <https://wordpress.org//>`_ `WP OAuth <https://wp-oauth.com/>`_.
 
 - `Python Social Auth custom backend implentation <https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html>`_
 - `WP Oauth Wordpress Plugin Documentation <https://wp-oauth.com/docs/>`_
@@ -164,7 +164,7 @@ add a snippet of this form to openedx_devops/.github/workflows/build-openedx.yml
         with:
           repository: edx-oauth2-wordpress-backend
           repository-organization: lpm0073
-          repository-ref: v1.0.2
+          repository-ref: v1.0.0
 
 
 Sample lms log output
