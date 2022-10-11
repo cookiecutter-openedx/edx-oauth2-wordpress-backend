@@ -47,11 +47,11 @@ include this repo in your project's requiremets.txt, or install it from the comm
 2. subclass WPOpenEdxOAuth2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Subclass wp_oauth_backend.wp_oauth.WPOpenEdxOAuth2, and configure for your Wordpress oauth provider.
+Subclass oauth2_wordpress.wp_oauth.WPOpenEdxOAuth2, and configure for your Wordpress oauth provider.
 
 ..  code-block:: python
 
-  from wp_oauth_backend.wp_oauth import WPOpenEdxOAuth2
+  from oauth2_wordpress.wp_oauth import WPOpenEdxOAuth2
 
 
   class StepwiseMathWPOAuth2(WPOpenEdxOAuth2):
@@ -75,9 +75,9 @@ Subclass wp_oauth_backend.wp_oauth.WPOpenEdxOAuth2, and configure for your Wordp
 ..  code-block:: yaml
 
   ADDL_INSTALLED_APPS:
-  - "wp_oauth_backend"
+  - "oauth2_wordpress"
   THIRD_PARTY_AUTH_BACKENDS:
-  - "wp_oauth_backend.wp_oauth.StepwiseMathWPOAuth2"
+  - "oauth2_wordpress.wp_oauth.StepwiseMathWPOAuth2"
   ENABLE_REQUIRE_THIRD_PARTY_AUTH: true
 
 add these settings to django.conf:
@@ -174,13 +174,13 @@ Sample lms log output
 ..  code-block:: shell
 
     2022-10-06 20:17:08,832 INFO 19 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/auth/login/stepwisemath-oauth/", "context": {"user_id": null, "path": "/auth/login/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://web.stepwisemath.ai/login", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {\"auth_entry\": [\"login\"], \"next\": [\"/dashboard\"]}, \"POST\": {}}", "time": "2022-10-06T20:17:08.832684+00:00", "event_type": "/auth/login/stepwisemath-oauth/", "event_source": "server", "page": null}
-    2022-10-06 20:17:09,230 INFO 19 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:216 - AUTHORIZATION_URL: https://stepwisemath.ai/oauth/authorize
+    2022-10-06 20:17:09,230 INFO 19 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:216 - AUTHORIZATION_URL: https://stepwisemath.ai/oauth/authorize
     [pid: 19|app: 0|req: 2/19] 192.168.4.4 () {68 vars in 1889 bytes} [Thu Oct  6 20:17:08 2022] GET /auth/login/stepwisemath-oauth/?auth_entry=login&next=%2Fdashboard => generated 0 bytes in 430 msecs (HTTP/1.1 302) 9 headers in 922 bytes (1 switches on core 0)
     2022-10-06 20:17:38,485 INFO 7 [tracking] [user None] [ip 192.168.6.26] logger.py:41 - {"name": "/auth/complete/stepwisemath-oauth/", "context": {"user_id": null, "path": "/auth/complete/stepwisemath-oauth/", "course_id": "", "org_id": "", "enterprise_uuid": ""}, "username": "", "session": "a3f4ac2a5bf97f717f5745984059891b", "ip": "192.168.6.26", "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36", "host": "web.stepwisemath.ai", "referer": "https://stepwisemath.ai/", "accept_language": "en-US,en;q=0.9,es-MX;q=0.8,es-US;q=0.7,es;q=0.6", "event": "{\"GET\": {\"redirect_state\": [\"pdbIKIcEbhjVr3Kon5VXUWWiy5kuX921\"], \"code\": [\"q0antmap4qfamd6pe24jh75pdprahpdiyitmut0o\"], \"state\": [\"pdbIKIcEbhjVr3Kon5VXUWWiy5kuX921\"], \"iframe\": [\"break\"]}, \"POST\": {}}", "time": "2022-10-06T20:17:38.484675+00:00", "event_type": "/auth/complete/stepwisemath-oauth/", "event_source": "server", "page": null}
-    2022-10-06 20:17:38,496 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:223 - ACCESS_TOKEN_URL: https://stepwisemath.ai/oauth/token
-    2022-10-06 20:17:40,197 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:230 - USER_QUERY: https://stepwisemath.ai/oauth/me
-    2022-10-06 20:17:40,197 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:363 - user_data() url: https://stepwisemath.ai/oauth/me?access_token=jx2zql9fw2jx9s7tayik4ybfjrmuhb7m5csb1mtl
-    2022-10-06 20:17:41,965 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:368 - user_data() response: {
+    2022-10-06 20:17:38,496 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:223 - ACCESS_TOKEN_URL: https://stepwisemath.ai/oauth/token
+    2022-10-06 20:17:40,197 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:230 - USER_QUERY: https://stepwisemath.ai/oauth/me
+    2022-10-06 20:17:40,197 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:363 - user_data() url: https://stepwisemath.ai/oauth/me?access_token=jx2zql9fw2jx9s7tayik4ybfjrmuhb7m5csb1mtl
+    2022-10-06 20:17:41,965 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:368 - user_data() response: {
         "ID": "7",
         "display_name": "Test McBugster",
         "user_email": "test@stepwisemath.ai",
@@ -192,7 +192,7 @@ Sample lms log output
         ],
         "user_status": "0"
     }
-    2022-10-06 20:17:41,966 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:269 - get_user_details() received wp-oauth user data response json dict: {
+    2022-10-06 20:17:41,966 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:269 - get_user_details() received wp-oauth user data response json dict: {
         "ID": "7",
         "display_name": "Test McBugster",
         "user_email": "test@stepwisemath.ai",
@@ -204,8 +204,8 @@ Sample lms log output
         ],
         "user_status": "0"
     }
-    2022-10-06 20:17:41,966 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:317 - get_user_details() processing response object
-    2022-10-06 20:17:41,966 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:241 - user_details.setter: new value set {
+    2022-10-06 20:17:41,966 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:317 - get_user_details() processing response object
+    2022-10-06 20:17:41,966 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:241 - user_details.setter: new value set {
         "date_joined": "2022-10-06 19:57:56",
         "email": "test@stepwisemath.ai",
         "first_name": "Test",
@@ -220,7 +220,7 @@ Sample lms log output
         "user_status": "0",
         "username": "testaccount"
     }
-    2022-10-06 20:17:41,967 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:345 - get_user_details() returning: {
+    2022-10-06 20:17:41,967 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:345 - get_user_details() returning: {
         "date_joined": "2022-10-06 19:57:56",
         "email": "test@stepwisemath.ai",
         "first_name": "Test",
@@ -235,7 +235,7 @@ Sample lms log output
         "user_status": "0",
         "username": "testaccount"
     }
-    2022-10-06 20:17:41,972 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:269 - get_user_details() received extended get_user_details() return dict: {
+    2022-10-06 20:17:41,972 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:269 - get_user_details() received extended get_user_details() return dict: {
         "access_token": "jx2zql9fw2jx9s7tayik4ybfjrmuhb7m5csb1mtl",
         "date_joined": "2022-10-06 19:57:56",
         "email": "test@stepwisemath.ai",
@@ -252,7 +252,7 @@ Sample lms log output
         "user_status": "0",
         "username": "testaccount"
     }
-    2022-10-06 20:17:41,973 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:241 - user_details.setter: new value set {
+    2022-10-06 20:17:41,973 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:241 - user_details.setter: new value set {
         "access_token": "jx2zql9fw2jx9s7tayik4ybfjrmuhb7m5csb1mtl",
         "date_joined": "2022-10-06 19:57:56",
         "email": "test@stepwisemath.ai",
@@ -269,7 +269,7 @@ Sample lms log output
         "user_status": "0",
         "username": "testaccount"
     }
-    2022-10-06 20:17:41,973 INFO 7 [wp_oauth_backend.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:290 - get_user_details() returning extended get_user_details() return dict: {
+    2022-10-06 20:17:41,973 INFO 7 [oauth2_wordpress.wp_oauth] [user None] [ip 192.168.6.26] wp_oauth.py:290 - get_user_details() returning extended get_user_details() return dict: {
         "access_token": "jx2zql9fw2jx9s7tayik4ybfjrmuhb7m5csb1mtl",
         "date_joined": "2022-10-06 19:57:56",
         "email": "test@stepwisemath.ai",

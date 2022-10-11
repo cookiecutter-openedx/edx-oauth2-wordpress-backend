@@ -4,9 +4,9 @@ written by:     Lawrence McDaniel
 
 date:           oct-2022
 
-usage:          subclass of BaseOAuth2 Third Party Authtencation client to 
-                handle the field mapping and data conversions between 
-                the dict that WP Oauth returns versus the dict that Open edX 
+usage:          subclass of BaseOAuth2 Third Party Authtencation client to
+                handle the field mapping and data conversions between
+                the dict that WP Oauth returns versus the dict that Open edX
                 actually needs.
 """
 import json
