@@ -65,7 +65,7 @@ ABOUT = load_about()
 VERSION = ABOUT["__version__"]
 
 setup(
-    name="wp-oauth-backend",
+    name="edx-oauth2-wordpress-backend",
     version=VERSION,
     description=(
         "An OAuth backend for the WP OAuth Wordpress Plugin, "
@@ -74,10 +74,10 @@ setup(
     long_description=README,
     author="Lawrence McDaniel, lpm0073@gmail.com",
     author_email="lpm0073@gmail.com",
-    url="https://github.com/StepwiseMath/wp-oauth-backend",
+    url="https://github.com/StepwiseMath/edx-oauth2-wordpress-backend",
     project_urls={
-        "Code": "https://github.com/StepwiseMath/wp-oauth-backend",
-        "Issue tracker": "https://github.com/StepwiseMath/wp-oauth-backend/issues",
+        "Code": "https://github.com/StepwiseMath/edx-oauth2-wordpress-backend",
+        "Issue tracker": "https://github.com/StepwiseMath/edx-oauth2-wordpress-backend/issues",
         "Community": "https://stepwisemath.ai",
     },
     packages=find_packages(),

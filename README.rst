@@ -42,7 +42,7 @@ include this repo in your project's requiremets.txt, or install it from the comm
 
   cd path/to/your/virtual/environment
   source path/to/venv/bin/activate
-  pip install https://github.com/lpm0073/wp-oauth-backend
+  pip install https://github.com/lpm0073/edx-oauth2-wordpress-backend
 
 2. subclass WPOpenEdxOAuth2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -104,26 +104,26 @@ add these settings to django.conf:
 4. Configure a new Oauth2 client from the lms Django Admin console
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: https://raw.githubusercontent.com/lpm0073/wp-oauth-backend/main/doc/django-admin-1.png
+.. image:: https://raw.githubusercontent.com/lpm0073/edx-oauth2-wordpress-backend/main/doc/django-admin-1.png
   :width: 100%
   :alt: Open edX Django Admin Add Provider Configuration (OAuth)
 
-.. image:: https://raw.githubusercontent.com/lpm0073/wp-oauth-backend/main/doc/django-admin-2.png
+.. image:: https://raw.githubusercontent.com/lpm0073/edx-oauth2-wordpress-backend/main/doc/django-admin-2.png
   :width: 100%
   :alt: Open edX Django Admin Add Provider Configuration (OAuth)
 
 
-5. Configure your devops
+5. Optional: Configure your devops
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cookiecutter openedx_devops build
 
 ..  code-block:: shell
 
-  - name: Add the wp-oauth-backend
+  - name: Add the edx-oauth2-wordpress-backend
     uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
     with:
-      repository: wp-oauth-backend
+      repository: edx-oauth2-wordpress-backend
       repository-organization: StepwiseMath
       repository-ref: main
       repository-token: ${{ secrets.PAT }}
@@ -143,7 +143,7 @@ WP Oauth Plugin Configuration
 This plugin enables your Open edX installation to authenticate against the WP Oauth plugin provider
 in your Wordpress web site, configured as follows:
 
-.. image:: https://raw.githubusercontent.com/lpm0073/wp-oauth-backend/main/doc/wp-oauth-config.png
+.. image:: https://raw.githubusercontent.com/lpm0073/edx-oauth2-wordpress-backend/main/doc/wp-oauth-config.png
   :width: 100%
   :alt: WP Oauth configuration page
 
@@ -159,10 +159,10 @@ add a snippet of this form to openedx_devops/.github/workflows/build-openedx.yml
       # ... add your initialization and any preceding steps ...
       #------------------------------------------------------------------------
 
-      - name: Add the wp-oauth-backend
+      - name: Add the edx-oauth2-wordpress-backend
         uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
         with:
-          repository: wp-oauth-backend
+          repository: edx-oauth2-wordpress-backend
           repository-organization: lpm0073
           repository-ref: v1.0.2
 
