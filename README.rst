@@ -1,4 +1,4 @@
-Wordpress OAuth2 Backend for Open edX
+Open edX OAuth2 Backend for Wordpress
 =====================================
 .. image:: https://img.shields.io/badge/hack.d-Lawrence%20McDaniel-orange.svg
   :target: https://lawrencemcdaniel.com
