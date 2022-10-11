@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
 name = "wp-oauth-backend_lpm0073"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
   { name="Lawrence McDaniel", email="lpm0073@gmail.com" },
 ]
@@ -16,6 +16,11 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+  "social-auth-core==4.2.0",
+  "social-auth-app-django==5.0.0"
+]
+keywords = ["Wordpress", "OAuth", "Open edX"]
 
 [project.urls]
 "Homepage" = "https://github.com/lpm0073/wp-oauth-backend"

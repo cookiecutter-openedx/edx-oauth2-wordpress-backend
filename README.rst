@@ -104,11 +104,11 @@ add these settings to django.conf:
 4. Configure a new Oauth2 client from the lms Django Admin console
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: doc/django-admin-1.png
+.. image:: https://raw.githubusercontent.com/lpm0073/wp-oauth-backend/main/doc/django-admin-1.png
   :width: 100%
   :alt: Open edX Django Admin Add Provider Configuration (OAuth)
 
-.. image:: doc/django-admin-2.png
+.. image:: https://raw.githubusercontent.com/lpm0073/wp-oauth-backend/main/doc/django-admin-2.png
   :width: 100%
   :alt: Open edX Django Admin Add Provider Configuration (OAuth)
 
@@ -143,7 +143,7 @@ WP Oauth Plugin Configuration
 This plugin enables your Open edX installation to authenticate against the WP Oauth plugin provider
 in your Wordpress web site, configured as follows:
 
-.. image:: doc/wp-oauth-config.png
+.. image:: https://raw.githubusercontent.com/lpm0073/wp-oauth-backend/main/doc/wp-oauth-config.png
   :width: 100%
   :alt: WP Oauth configuration page
 
@@ -164,7 +164,7 @@ add a snippet of this form to openedx_devops/.github/workflows/build-openedx.yml
         with:
           repository: wp-oauth-backend
           repository-organization: lpm0073
-          repository-ref: v1.0.0
+          repository-ref: v1.0.1
 
 
 Sample lms log output
