@@ -1,5 +1,9 @@
 Open edX OAuth2 Backend for Wordpress
 =====================================
+.. image:: https://img.shields.io/static/v1?label=pypi&style=flat-square&color=0475b6&message=edx-oauth2-wordpress-backend
+  :alt: PyPi edx-oauth2-wordpress-backend
+  :target: https://pypi.org/project/edx-oauth2-wordpress-backend/
+
 .. image:: https://img.shields.io/badge/hack.d-Lawrence%20McDaniel-orange.svg
   :target: https://lawrencemcdaniel.com
   :alt: Hack.d Lawrence McDaniel
@@ -36,7 +40,7 @@ An example implementation for an Open edX installation named https://stepwisemat
 1. add this package to your project's requiremets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-include this repo in your project's requiremets.txt, or install it from the command line.
+add this package to your project's requiremets.txt, or install it from the command line.
 
 ..  code-block:: shell
 
