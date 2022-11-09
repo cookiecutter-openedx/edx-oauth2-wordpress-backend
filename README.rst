@@ -69,7 +69,14 @@ Subclass oauth2_wordpress.wp_oauth.WPOpenEdxOAuth2, and configure for your Wordp
 
       # note: no slash at the end of the base url. Python Social Auth
       # might clean this up for you, but i'm not 100% certain of that.
+      #
+      # the following will create an authorization url of https://stepwisemath.ai/wp-json/moserver/authorize
       BASE_URL = "https://stepwisemath.ai"
+      PATH = "wp-json/moserver"
+      AUTHORIZATION_ENDPOINT = "authorize"
+      TOKEN_ENDPOINT = "token"
+      USERINFO_ENDPOINT = "resource"
+
 
 3. configure your Open edX lms application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
