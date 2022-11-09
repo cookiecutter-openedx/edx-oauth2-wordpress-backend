@@ -57,12 +57,12 @@ class WPOpenEdxOAuth2(BaseOAuth2):
     BASE_URL = "https://set-me-please.com"
 
     # a path to append to the BASE_URL: https://oauth_host.com/oauth/
-    PATH = "wp-json/moserver/"
+    PATH = "oauth/"
 
     # endpoint defaults
     AUTHORIZATION_ENDPOINT = "authorize"
     TOKEN_ENDPOINT = "token"
-    USERINFO_ENDPOINT = "resource"
+    USERINFO_ENDPOINT = "me"
 
     # The default key name where the user identification field is defined, it’s
     # used in the auth process when some basic user data is returned. This Id

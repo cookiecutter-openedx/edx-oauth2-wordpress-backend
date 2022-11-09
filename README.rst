@@ -22,7 +22,7 @@ Open edX OAuth2 Backend for Wordpress
 Overview
 --------
 
-An Open edX oauth2 backend for `Wordpress <https://wordpress.org//>`_ `miniOrange OAuth / OpenID Connect Server <https://www.miniorange.com/>`_.
+An Open edX oauth2 backend for `Wordpress <https://wordpress.org//>`_ `WP OAuth Server <https://wp-oauth.com/>`_.
 
 - `Python Social Auth custom backend implentation <https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html>`_
 - `WP Oauth Wordpress Plugin Documentation <https://wp-oauth.com/docs/>`_
@@ -136,9 +136,9 @@ WP Oauth Plugin Configuration
 This plugin enables your Open edX installation to authenticate against the WP Oauth plugin provider
 in your Wordpress web site, configured as follows:
 
-.. image:: https://raw.githubusercontent.com/lpm0073/edx-oauth2-wordpress-backend/main/doc/miniorange-oauth-config.png
+.. image:: https://raw.githubusercontent.com/lpm0073/edx-oauth2-wordpress-backend/main/doc/wp-oauth-config.png
   :width: 100%
-  :alt: miniOrange OAuth configuration page
+  :alt: WP OAuth Server configuration page
 
 Sample lms log output
 ---------------------
