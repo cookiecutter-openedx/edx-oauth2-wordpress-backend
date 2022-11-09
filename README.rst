@@ -72,7 +72,7 @@ Subclass oauth2_wordpress.wp_oauth.WPOpenEdxOAuth2, and configure for your Wordp
       #
       # the following will create an authorization url of https://stepwisemath.ai/wp-json/moserver/authorize
       BASE_URL = "https://stepwisemath.ai"
-      PATH = "wp-json/moserver"
+      PATH = "wp-json/moserver/"
       AUTHORIZATION_ENDPOINT = "authorize"
       TOKEN_ENDPOINT = "token"
       USERINFO_ENDPOINT = "resource"
