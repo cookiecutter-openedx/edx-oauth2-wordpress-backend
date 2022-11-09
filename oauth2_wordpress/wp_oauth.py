@@ -57,7 +57,7 @@ class WPOpenEdxOAuth2(BaseOAuth2):
     BASE_URL = "https://set-me-please.com"
 
     # a path to append to the BASE_URL: https://oauth_host.com/oauth/
-    PATH = "wp-json/moserver"
+    PATH = "wp-json/moserver/"
 
     # endpoint defaults
     AUTHORIZATION_ENDPOINT = "authorize"
