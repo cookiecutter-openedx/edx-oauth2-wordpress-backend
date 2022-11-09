@@ -12,6 +12,7 @@ usage:          subclass of BaseOAuth2 Third Party Authtencation client to
 import json
 from urllib.parse import urlencode
 from urllib.request import urlopen
+from urllib.parse import urljoin
 from logging import getLogger
 from social_core.backends.oauth import BaseOAuth2
 from django.contrib.auth import get_user_model
@@ -54,6 +55,14 @@ class WPOpenEdxOAuth2(BaseOAuth2):
     # note: no slash at the end of the base url. Python Social Auth
     # might clean this up for you, but i'm not 100% certain of that.
     BASE_URL = "https://set-me-please.com"
+
+    # a path to append to the BASE_URL: https://oauth_host.com/oauth/
+    PATH = "wp-json/moserver"
+
+    # endpoint defaults
+    AUTHORIZATION_ENDPOINT = "authorize"
+    TOKEN_ENDPOINT = "token"
+    USERINFO_ENDPOINT = "resource"
 
     # The default key name where the user identification field is defined, it’s
     # used in the auth process when some basic user data is returned. This Id
@@ -204,6 +213,10 @@ class WPOpenEdxOAuth2(BaseOAuth2):
             return "get_user_details() return dict"
         return "unrecognized response dict"
 
+    @property
+    def URL(self):
+        return urljoin(self.BASE_URL, self.PATH)
+
     # override Python Social Auth default end points.
     # see https://wp-oauth.com/docs/general/endpoints/
     #
@@ -211,21 +224,21 @@ class WPOpenEdxOAuth2(BaseOAuth2):
     # so that we can include logging for diagnostic purposes.
     @property
     def AUTHORIZATION_URL(self) -> str:
-        url = f"{self.BASE_URL}/oauth/authorize"
+        url = urljoin(self.URL, self.AUTHORIZATION_ENDPOINT)
         if VERBOSE_LOGGING:
             logger.info("AUTHORIZATION_URL: {url}".format(url=url))
         return url
 
     @property
     def ACCESS_TOKEN_URL(self) -> str:
-        url = f"{self.BASE_URL}/oauth/token"
+        url = urljoin(self.URL, self.TOKEN_ENDPOINT)
         if VERBOSE_LOGGING:
             logger.info("ACCESS_TOKEN_URL: {url}".format(url=url))
         return url
 
     @property
     def USER_QUERY(self) -> str:
-        url = f"{self.BASE_URL}/oauth/me"
+        url = urljoin(self.URL, self.USERINFO_ENDPOINT)
         if VERBOSE_LOGGING:
             logger.info("USER_QUERY: {url}".format(url=url))
         return url

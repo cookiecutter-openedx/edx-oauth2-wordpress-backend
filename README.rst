@@ -22,7 +22,7 @@ Open edX OAuth2 Backend for Wordpress
 Overview
 --------
 
-An Open edX oauth2 backend for `Wordpress <https://wordpress.org//>`_ `WP OAuth <https://wp-oauth.com/>`_.
+An Open edX oauth2 backend for `Wordpress <https://wordpress.org//>`_ `miniOrange OAuth / OpenID Connect Server <https://www.miniorange.com/>`_.
 
 - `Python Social Auth custom backend implentation <https://python-social-auth.readthedocs.io/en/latest/backends/implementation.html>`_
 - `WP Oauth Wordpress Plugin Documentation <https://wp-oauth.com/docs/>`_
@@ -93,9 +93,9 @@ add these settings to django.conf:
   * - WPOAUTH_BACKEND_BASE_URL
     - https://stepwisemath.ai
   * - WPOAUTH_BACKEND_CLIENT_ID
-    - see: https://stepwisemath.ai/wp-admin/admin.php?page=wo_manage_clients
+    - see: https://stepwisemath.ai/wp-admin/admin.php?page=mo_oauth_server_settings
   * - WPOAUTH_BACKEND_CLIENT_SECRET
-    - see: https://stepwisemath.ai/wp-admin/admin.php?page=wo_manage_clients
+    - see: https://stepwisemath.ai/wp-admin/admin.php?page=mo_oauth_server_settings
   * - SCOPE
     - basic email profile
   * - GRANT_TYPE
@@ -115,22 +115,6 @@ add these settings to django.conf:
   :alt: Open edX Django Admin Add Provider Configuration (OAuth)
 
 
-5. Optional: Configure your devops
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Cookiecutter openedx_devops build
-
-..  code-block:: shell
-
-  - name: Add the edx-oauth2-wordpress-backend
-    uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
-    with:
-      repository: edx-oauth2-wordpress-backend
-      repository-organization: StepwiseMath
-      repository-ref: main
-      repository-token: ${{ secrets.PAT }}
-
-
 Cookiecutter openedx_devops deployment
 
 ..  code-block:: shell
@@ -145,29 +129,9 @@ WP Oauth Plugin Configuration
 This plugin enables your Open edX installation to authenticate against the WP Oauth plugin provider
 in your Wordpress web site, configured as follows:
 
-.. image:: https://raw.githubusercontent.com/lpm0073/edx-oauth2-wordpress-backend/main/doc/wp-oauth-config.png
+.. image:: https://raw.githubusercontent.com/lpm0073/edx-oauth2-wordpress-backend/main/doc/miniorange-oauth-config.png
   :width: 100%
-  :alt: WP Oauth configuration page
-
-Usage in Cookiecutter
----------------------
-
-add a snippet of this form to openedx_devops/.github/workflows/build-openedx.yml
-
-..  code-block:: yaml
-
-    steps:
-      #------------------------------------------------------------------------
-      # ... add your initialization and any preceding steps ...
-      #------------------------------------------------------------------------
-
-      - name: Add the edx-oauth2-wordpress-backend
-        uses: openedx-actions/tutor-plugin-build-openedx-add-requirement@v1.0.0
-        with:
-          repository: edx-oauth2-wordpress-backend
-          repository-organization: lpm0073
-          repository-ref: v1.0.0
-
+  :alt: miniOrange OAuth configuration page
 
 Sample lms log output
 ---------------------
