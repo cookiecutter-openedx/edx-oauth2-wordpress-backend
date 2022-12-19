@@ -17,7 +17,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  "social-auth-core==4.2.0",
+  "social-auth-core>=4.2.0",
   "social-auth-app-django==5.0.0"
 ]
 keywords = ["Open edX", "oauth", "Wordpress"]
