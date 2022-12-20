@@ -9,7 +9,7 @@ report:
 
 build:
 	python3 -m pip install --upgrade setuptools wheel twine
-	python -m pip install --upgrade build
+	python3 -m pip install --upgrade build
 
 	if [ -d "./build" ]; then sudo rm -r build; fi
 	if [ -d "./dist" ]; then sudo rm -r dist; fi
