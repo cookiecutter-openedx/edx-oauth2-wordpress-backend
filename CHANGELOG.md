@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+## Version 1.0.6 (2022-12-20)
+
+- standardize usage of python3 in Makefile
+
 ## Version 1.0.5 (2022-12-20)
 
 - version bumps
