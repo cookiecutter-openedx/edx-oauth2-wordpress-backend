@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
 name = "edx-oauth2-wordpress-backend"
-version = "1.0.4"
+version = "1.0.5"
 authors = [
   { name="Lawrence McDaniel", email="lpm0073@gmail.com" },
 ]
