@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+## Version 1.0.7 (2023-08-12)
+
+- match version requirements in pyproject.toml to those in requirements/stable-psa.txt
+
 ## Version 1.0.6 (2022-12-20)
 
 - standardize usage of python3 in Makefile
