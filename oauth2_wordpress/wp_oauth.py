@@ -110,6 +110,9 @@ class WPOpenEdxOAuth2(BaseOAuth2):
     # changed to a list. example 'basic, email, profile'. This
     # list can be delimited with commas, spaces, whatever.
     SCOPE_SEPARATOR = " "
+    
+    # Enable updates on the Django user object on successful WordPress login.
+    UPDATE_USER_ON_LOGIN = True
 
     # private utility function. not part of psa.
     def _urlopen(self, url):
@@ -409,28 +412,28 @@ class WPOpenEdxOAuth2(BaseOAuth2):
         except User.DoesNotExist:
             return self.user_details
 
-        if (user.is_superuser != self.user_details["is_superuser"]) or (
-            user.is_staff != self.user_details["is_staff"]
-        ):
-            user.is_superuser = self.user_details["is_superuser"]
-            user.is_staff = self.user_details["is_staff"]
-            user.save()
-            logger.info(
-                "Updated the is_superuser/is_staff flags for user {username}".format(
-                    username=user.username
+        if self.UPDATE_USER_ON_LOGIN:
+            if (user.is_superuser != self.user_details["is_superuser"]) or (
+                user.is_staff != self.user_details["is_staff"]
+            ):
+                user.is_superuser = self.user_details["is_superuser"]
+                user.is_staff = self.user_details["is_staff"]
+                user.save()
+                logger.info(
+                    "Updated the is_superuser/is_staff flags for user {username}".format(
+                        username=user.username
+                    )
                 )
-            )
-
-        if (user.first_name != self.user_details["first_name"]) or (
-            user.last_name != self.user_details["last_name"]
-        ):
-            user.first_name = self.user_details["first_name"]
-            user.last_name = self.user_details["last_name"]
-            user.save()
-            logger.info(
-                "Updated first_name/last_name for user {username}".format(
-                    username=user.username
+            if (user.first_name != self.user_details["first_name"]) or (
+                user.last_name != self.user_details["last_name"]
+            ):
+                user.first_name = self.user_details["first_name"]
+                user.last_name = self.user_details["last_name"]
+                user.save()
+                logger.info(
+                    "Updated first_name/last_name for user {username}".format(
+                        username=user.username
+                    )
                 )
-            )
 
         return self.user_details
