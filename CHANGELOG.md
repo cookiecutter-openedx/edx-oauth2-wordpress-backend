@@ -1,6 +1,6 @@
 # CHANGE LOG
 
-## Version 1.0.8 (2023-08-12)
+## Version 1.0.8 (2024-02-01)
 
 - add support for UPDATE_USER_ON_LOGIN flag
 
